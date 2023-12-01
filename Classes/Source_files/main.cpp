@@ -4,12 +4,28 @@
 /********* Include statements *********/
 
 #include "StaticInClasses.hpp"
+#include "ConstructorDestructor.hpp"
 
 /**************************************/
 
-void TestStaticInClasses()
+/********** Define statements *********/
+
+#define MSG_TEST_STATIC_IN_CLASSES      "Testing StaticInClasses."
+#define MSG_TEST_CONSTRUCTOR_DESTRUCTOR "Testing ConstructorDestructor."
+
+/**************************************/
+
+/******** Function definitions ********/
+
+void PrintTestHeader(const char* header)
 {
-    std::cout << "Testing StaticInClasses." << std::endl;
+    std::cout << std::endl << header << std::endl;
+}
+
+void TestStaticInClasses(void)
+{
+    PrintTestHeader(MSG_TEST_STATIC_IN_CLASSES);
+
     StaticInClasses s1;
 
     s1.SetX(1);
@@ -41,9 +57,23 @@ void TestStaticInClasses()
     StaticInClasses::Greeting();
 }
 
+void TestConstructorDestructor(void)
+{
+    PrintTestHeader(MSG_TEST_CONSTRUCTOR_DESTRUCTOR);
+
+    ConstructorDestructor cd1;
+    cd1.PrintCoordinates();
+
+    ConstructorDestructor cd2(2, 3);
+    cd2.PrintCoordinates();
+}
+
 int main()
 {
     TestStaticInClasses();
+    TestConstructorDestructor();
 
     return 0;
 }
+
+/**************************************/
