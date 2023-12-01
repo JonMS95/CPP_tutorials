@@ -5,6 +5,7 @@
 
 #include "StaticInClasses.hpp"
 #include "ConstructorDestructor.hpp"
+#include "ClassInheritance.hpp"
 
 /**************************************/
 
@@ -12,6 +13,7 @@
 
 #define MSG_TEST_STATIC_IN_CLASSES      "Testing StaticInClasses."
 #define MSG_TEST_CONSTRUCTOR_DESTRUCTOR "Testing ConstructorDestructor."
+#define MSG_TEST_CLASS_INHERITANCE      "Testing ClassInheritance."
 
 /**************************************/
 
@@ -68,10 +70,22 @@ void TestConstructorDestructor(void)
     cd2.PrintCoordinates();
 }
 
+void TestClassInheritance()
+{
+    PrintTestHeader(MSG_TEST_CLASS_INHERITANCE);
+
+    ClassInheritanceDerived ci(1, 2, "Test instance");
+    
+    ci.Move(5, 4);
+    ci.PrintCoordinates();
+    ci.PrintName();
+}
+
 int main()
 {
     TestStaticInClasses();
     TestConstructorDestructor();
+    TestClassInheritance();
 
     return 0;
 }
