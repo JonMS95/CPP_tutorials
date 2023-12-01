@@ -20,6 +20,8 @@
 // aim is not to create a function that can be shared with each instance (it could be easier to create a function
 // in pure C style), but for organizational purposes. 
 
+/*********** Class prototype **********/
+
 class StaticInClasses
 {
 private:
@@ -35,5 +37,7 @@ public:
     void PrintStaticVars(void);
     static void Greeting(void);
 };
+
+/**************************************/
 
 #endif
