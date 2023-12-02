@@ -7,15 +7,18 @@
 #include "ConstructorDestructor.hpp"
 #include "ClassInheritance.hpp"
 #include "VirtualFunctions.hpp"
+#include "Interfaces.hpp"
 
 /**************************************/
 
 /********** Define statements *********/
 
+#define MSG_TEST_HEADER                 "*********************************"
 #define MSG_TEST_STATIC_IN_CLASSES      "Testing StaticInClasses."
 #define MSG_TEST_CONSTRUCTOR_DESTRUCTOR "Testing ConstructorDestructor."
 #define MSG_TEST_CLASS_INHERITANCE      "Testing ClassInheritance."
 #define MSG_TEST_VIRTUAL_FUNCTIONS      "Testing VirtualFunctions."
+#define MSG_TEST_INTERFACES             "Testing Interfaces."
 
 /**************************************/
 
@@ -23,7 +26,7 @@
 
 void PrintTestHeader(const char* header)
 {
-    std::cout << std::endl << header << std::endl;
+    std::cout << std::endl << MSG_TEST_HEADER << std::endl << header << std::endl << MSG_TEST_HEADER << std::endl;
 }
 
 void TestStaticInClasses(void)
@@ -111,12 +114,29 @@ void TestVirtualFunctions()
     std::cout << vf5.Greeting() << std::endl;
 }
 
+void TestInterfaces()
+{
+    PrintTestHeader(MSG_TEST_INTERFACES);
+
+    // An InterfacesBase object cannot be instantiated as it includes an interface between itself,
+    // which could not be called due to the fact that it has actually no implementation.
+    // Same would happen if no implementation was provided within the derived class.
+
+    // InterfacesBase if1;
+    InterfacesDerived if2;
+    if2.Hello();
+    std::cout << if2.Greeting() << std::endl;
+
+    std::cout << "Calling it from PrintInterfaceGreeting function: " << PrintInterfaceGreeting(&if2) << std::endl;
+}
+
 int main()
 {
     TestStaticInClasses();
     TestConstructorDestructor();
     TestClassInheritance();
     TestVirtualFunctions();
+    TestInterfaces();
 
     return 0;
 }
