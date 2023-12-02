@@ -6,6 +6,7 @@
 #include "StaticInClasses.hpp"
 #include "ConstructorDestructor.hpp"
 #include "ClassInheritance.hpp"
+#include "VirtualFunctions.hpp"
 
 /**************************************/
 
@@ -14,6 +15,7 @@
 #define MSG_TEST_STATIC_IN_CLASSES      "Testing StaticInClasses."
 #define MSG_TEST_CONSTRUCTOR_DESTRUCTOR "Testing ConstructorDestructor."
 #define MSG_TEST_CLASS_INHERITANCE      "Testing ClassInheritance."
+#define MSG_TEST_VIRTUAL_FUNCTIONS      "Testing VirtualFunctions."
 
 /**************************************/
 
@@ -81,11 +83,40 @@ void TestClassInheritance()
     ci.PrintName();
 }
 
+void TestVirtualFunctions()
+{
+    PrintTestHeader(MSG_TEST_VIRTUAL_FUNCTIONS);
+
+    VirtualFunctionsBase vf1;
+    VirtualFunctionsBase* pvf1 = &vf1;
+
+    VirtualFunctionsDerived vf2("JON");
+    VirtualFunctionsDerived* pvf2 = &vf2;
+    VirtualFunctionsBase* pvf3 = &vf2;
+
+    // If the function to be called is not marked as virtual, then the function will be called depending on the
+    // type of the variable (it may be casted) or the type of the pointer that is used to point at the instance.
+    std::cout << pvf1->Greeting() << std::endl;
+    std::cout << pvf2->Greeting() << std::endl;
+    std::cout << pvf3->Greeting() << std::endl;
+    
+    // If the base class function is marked as virtual, then the compiler will have a clue about which function
+    // should it be calling at runtime whether it is the one in the base or the derived class.
+    std::cout << pvf1->Talk() << std::endl;
+    std::cout << pvf2->Talk() << std::endl;
+    std::cout << pvf3->Talk() << std::endl;
+
+    VirtualFunctionsDerived vf4("JON");
+    VirtualFunctionsBase vf5 = VirtualFunctionsDerived("JMS");
+    std::cout << vf5.Greeting() << std::endl;
+}
+
 int main()
 {
     TestStaticInClasses();
     TestConstructorDestructor();
     TestClassInheritance();
+    TestVirtualFunctions();
 
     return 0;
 }
