@@ -141,11 +141,12 @@ void TestVisibility()
     v1.DoubleCoordinates();
     v1.PrintCoordinates();
     
-    // "SetCoordinates" function call below cannot exist, as it is protected. This means that it cannot be
+    // v1.SetCoordinates(3, 4);
+
+    // "SetCoordinates" function call above is not compilable, as it is protected. This means that it cannot be
     // accessed from the outside in contrast with public methods / variables. Instead, a public function
     // should be used to indirectly access the function. Thus, it's accessible only from the derived class'
     // context. 
-    // v1.SetCoordinates(3, 4);
 }
 
 int main()
