@@ -10,6 +10,7 @@
 #include "Interfaces.hpp"
 #include "Visibility.hpp"
 #include "ConstructorInitializerList.hpp"
+#include "OperatorOverloading.hpp"
 
 /**************************************/
 
@@ -23,6 +24,7 @@
 #define MSG_TEST_INTERFACES             "Testing Interfaces."
 #define MSG_TEST_VISIBILITY             "Tetsing Visibility."
 #define MSG_TEST_CONSTRUCTOR_INIT_LIST  "Testing ConstructorInitializerList."
+#define MSG_TEST_OPERATOR_OVERLOADING   "Testing OperatorOverloading."
 
 /**************************************/
 
@@ -165,6 +167,22 @@ void TestConstructorInitializerList()
     cil2.PrintName();
 }
 
+void TestOperatorOverloading()
+{
+    PrintTestHeader(MSG_TEST_OPERATOR_OVERLOADING);
+
+    OperatorOverloading oo1(1, 2);
+    OperatorOverloading oo2(3, 4);
+    OperatorOverloading oo3(1, 2);
+
+    ShowCoordinatesAsVector(oo1);
+    ShowCoordinatesAsVector(oo2);
+    ShowCoordinatesAsVector(oo3);
+    
+    std::cout << "(oo1 == oo2) returns: " << (oo1 == oo2) << std::endl;
+    std::cout << "(oo1 == oo3) returns: " << (oo1 == oo3) << std::endl;
+}
+
 int main()
 {
     TestStaticInClasses();
@@ -174,6 +192,7 @@ int main()
     TestInterfaces();
     TestVisibility();
     TestConstructorInitializerList();
+    TestOperatorOverloading();
 
     return 0;
 }
