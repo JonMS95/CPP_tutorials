@@ -148,7 +148,10 @@ void TestVisibility()
     // "SetCoordinates" function call above is not compilable, as it is protected. This means that it cannot be
     // accessed from the outside in contrast with public methods / variables. Instead, a public function
     // should be used to indirectly access the function. Thus, it's accessible only from the derived class'
-    // context. 
+    // context. However, we have provided a couple of friend functions within the base class.
+
+    SetCoordinatesFromTheOutside(v1, 8, 9);
+    ShowCoordinatesFromTheOutside(v1);
 }
 
 void TestConstructorInitializerList()
