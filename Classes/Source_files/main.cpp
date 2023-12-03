@@ -8,6 +8,7 @@
 #include "ClassInheritance.hpp"
 #include "VirtualFunctions.hpp"
 #include "Interfaces.hpp"
+#include "Visibility.hpp"
 
 /**************************************/
 
@@ -19,6 +20,7 @@
 #define MSG_TEST_CLASS_INHERITANCE      "Testing ClassInheritance."
 #define MSG_TEST_VIRTUAL_FUNCTIONS      "Testing VirtualFunctions."
 #define MSG_TEST_INTERFACES             "Testing Interfaces."
+#define MSG_TEST_VISIBILITY             "Tetsing Visibility."
 
 /**************************************/
 
@@ -130,6 +132,22 @@ void TestInterfaces()
     std::cout << "Calling it from PrintInterfaceGreeting function: " << PrintInterfaceGreeting(&if2) << std::endl;
 }
 
+void TestVisibility()
+{
+    PrintTestHeader(MSG_TEST_VISIBILITY);
+
+    VisibilityDerived v1(1, 2);
+
+    v1.DoubleCoordinates();
+    v1.PrintCoordinates();
+    
+    // "SetCoordinates" function call below cannot exist, as it is protected. This means that it cannot be
+    // accessed from the outside in contrast with public methods / variables. Instead, a public function
+    // should be used to indirectly access the function. Thus, it's accessible only from the derived class'
+    // context. 
+    // v1.SetCoordinates(3, 4);
+}
+
 int main()
 {
     TestStaticInClasses();
@@ -137,6 +155,7 @@ int main()
     TestClassInheritance();
     TestVirtualFunctions();
     TestInterfaces();
+    TestVisibility();
 
     return 0;
 }
