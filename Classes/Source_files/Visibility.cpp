@@ -52,4 +52,15 @@ void VisibilityDerived::DoubleCoordinates(void)
 
 /******** Function definitions ********/
 
+void ShowCoordinatesFromTheOutside(VisibilityBase& obj)
+{
+    std::cout << "Object coordinates using friend function. x: " << obj.x << " y: " << obj.y << std::endl; 
+}
+
+void SetCoordinatesFromTheOutside(VisibilityBase& obj, int x_input, int y_input)
+{
+    obj.x = x_input;
+    obj.y = y_input;
+}
+
 /**************************************/

@@ -24,7 +24,12 @@
 // be accessed from the derived class directly, but using the "SetCoordinates" method instead.
 
 // Note that the base class constructor is called when the derived class constructor is executed, as a new base class
-// object instance is being actually created. 
+// object instance is being actually created.
+
+// Okay, that's fine, but it's still worth pointing out that there are some special type of functions that can actually
+// access a class' private members and methods: friend functions. The prototype of these functions should be stated
+// somewhere within the target class definition, although the definition of the function itself must be as if it was
+// a common function.
 
 /********** Class prototypes **********/
 
@@ -39,6 +44,8 @@ public:
     void PrintCoordinates(void);
     VisibilityBase(void);
     VisibilityBase(int x_input, int y_input);
+    friend void ShowCoordinatesFromTheOutside(VisibilityBase& obj);
+    friend void SetCoordinatesFromTheOutside(VisibilityBase& obj, int x_input, int y_input);
 };
 
 class VisibilityDerived : public VisibilityBase
