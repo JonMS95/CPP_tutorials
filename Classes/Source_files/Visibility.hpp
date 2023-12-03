@@ -20,22 +20,32 @@
 // ·private:    members cannot be accessed or viewed from outside the class.
 // ·protected:  members cannot be accessed from outside the class, however, they can be accessed in inherited classes.
 
+// In the example below, we are creating a base class with a couple of private variables. Therefore, these two cannot
+// be accessed from the derived class directly, but using the "SetCoordinates" method instead.
+
+// Note that the base class constructor is called when the derived class constructor is executed, as a new base class
+// object instance is being actually created. 
+
 /********** Class prototypes **********/
 
 class VisibilityBase
 {
 private:
     int x, y;
+protected:
     std::vector<int> GetCoordinatesAsVector(void);
+    void SetCoordinates(int x_input, int y_input);
 public:
     void PrintCoordinates(void);
+    VisibilityBase(void);
     VisibilityBase(int x_input, int y_input);
 };
 
 class VisibilityDerived : public VisibilityBase
 {
 public:
-
+    VisibilityDerived(int x_input, int y_input);
+    void DoubleCoordinates(void);
 };
 
 /**************************************/

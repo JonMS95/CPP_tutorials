@@ -8,8 +8,13 @@
 
 std::vector<int> VisibilityBase::GetCoordinatesAsVector(void)
 {
-    std::vector<int> ret = {this->x, this->y};
-    return ret;
+    return {this->x, this->y};
+}
+
+void VisibilityBase::SetCoordinates(int x_input, int y_input)
+{
+    this->x = x_input;
+    this->y = y_input;
 }
 
 void VisibilityBase::PrintCoordinates(void)
@@ -18,10 +23,29 @@ void VisibilityBase::PrintCoordinates(void)
     std::cout << "x: " << coordinates[0] << " y: " << coordinates[1] << std::endl;
 }
 
+VisibilityBase::VisibilityBase(void)
+{
+    std::cout << "Creating VisibilityBase class instance with [0, 0] coordinates." << std::endl; 
+    this->x = 0;
+    this->y = 0;
+}
+
 VisibilityBase::VisibilityBase(int x_input, int y_input)
 {
     this->x = x_input;
     this->y = y_input;
+}
+
+VisibilityDerived::VisibilityDerived(int x_input, int y_input)
+{
+    std::cout << "Creating VisibilityDerived class instance with [" << x_input << ", " << y_input << "] coordinates." << std::endl;
+    this->SetCoordinates(x_input, y_input);
+}
+
+void VisibilityDerived::DoubleCoordinates(void)
+{
+    std::vector<int> coordinates = this->GetCoordinatesAsVector();
+    this->SetCoordinates(coordinates[0] * 2, coordinates[1] * 2);
 }
 
 /**************************************/
