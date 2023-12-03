@@ -9,6 +9,7 @@
 #include "VirtualFunctions.hpp"
 #include "Interfaces.hpp"
 #include "Visibility.hpp"
+#include "ConstructorInitializerList.hpp"
 
 /**************************************/
 
@@ -21,6 +22,7 @@
 #define MSG_TEST_VIRTUAL_FUNCTIONS      "Testing VirtualFunctions."
 #define MSG_TEST_INTERFACES             "Testing Interfaces."
 #define MSG_TEST_VISIBILITY             "Tetsing Visibility."
+#define MSG_TEST_CONSTRUCTOR_INIT_LIST  "Testing ConstructorInitializerList."
 
 /**************************************/
 
@@ -149,6 +151,17 @@ void TestVisibility()
     // context. 
 }
 
+void TestConstructorInitializerList()
+{
+    PrintTestHeader(MSG_TEST_CONSTRUCTOR_INIT_LIST);
+
+    ConstructorInitializerList cil1;
+    ConstructorInitializerList cil2("JON", 28);
+
+    cil1.PrintName();
+    cil2.PrintName();
+}
+
 int main()
 {
     TestStaticInClasses();
@@ -157,6 +170,7 @@ int main()
     TestVirtualFunctions();
     TestInterfaces();
     TestVisibility();
+    TestConstructorInitializerList();
 
     return 0;
 }
