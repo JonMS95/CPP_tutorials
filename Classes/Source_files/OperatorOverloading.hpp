@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 /**************************************/
 
@@ -16,6 +17,9 @@
 // example), it could be defined a "==" operator overload in order to do so without having to call any function.
 
 // The common syntax for operator overloading is: <return_type> operator<operator_symbol>(args) const {<function_body>}
+// Actually, const keyword at the end of the function prototype is not mandatory, although it is common. What it
+// means is just that the object from which the overloaded operator is called is not meant to be changed whatsoever.
+// However, we may want to change the calling object, for instance, if we want to add values to it.
 
 /********** Class prototypes **********/
 
@@ -24,9 +28,12 @@ class OperatorOverloading
 private:
     int x;
     int y;
+    std::string name;
 public:
-    OperatorOverloading(int x_input, int y_input);
+    OperatorOverloading();
+    OperatorOverloading(int x_input, int y_input, std::string name_input);
     bool operator==(const OperatorOverloading& obj) const;
+    OperatorOverloading operator+(const OperatorOverloading& obj) const;
     friend void ShowCoordinatesAsVector(OperatorOverloading& obj);
 };
 
