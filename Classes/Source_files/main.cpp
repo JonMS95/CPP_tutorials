@@ -171,9 +171,9 @@ void TestOperatorOverloading()
 {
     PrintTestHeader(MSG_TEST_OPERATOR_OVERLOADING);
 
-    OperatorOverloading oo1(1, 2);
-    OperatorOverloading oo2(3, 4);
-    OperatorOverloading oo3(1, 2);
+    OperatorOverloading oo1(1, 2, "oo1");
+    OperatorOverloading oo2(3, 4, "oo2");
+    OperatorOverloading oo3(1, 2, "oo3");
 
     ShowCoordinatesAsVector(oo1);
     ShowCoordinatesAsVector(oo2);
@@ -181,6 +181,15 @@ void TestOperatorOverloading()
     
     std::cout << "(oo1 == oo2) returns: " << (oo1 == oo2) << std::endl;
     std::cout << "(oo1 == oo3) returns: " << (oo1 == oo3) << std::endl;
+
+    OperatorOverloading oo4(2, 2, "oo4");
+    OperatorOverloading oo5(4, 7, "oo5");
+    OperatorOverloading oo6 = oo4 + oo5;
+
+    ShowCoordinatesAsVector(oo4);
+    ShowCoordinatesAsVector(oo5);
+    std::cout << "oo4 + oo5 = oo6" << std::endl;
+    ShowCoordinatesAsVector(oo6);
 }
 
 int main()
