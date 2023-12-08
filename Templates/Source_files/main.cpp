@@ -1,6 +1,3 @@
-// This is an attempt to grasp all the nuances when it comes to Classes in C++.
-// Classes in C++ have already been studied, so this is more like brushing up on the topic rather than starting up from scratch for me.
-
 /********* Include statements *********/
 
 #include <iostream>
@@ -25,6 +22,10 @@ void PrintTestHeader(const char* header)
 void TestTemplates()
 {
     PrintTestHeader(MSG_TEST_TEMPLATES);
+
+    std::cout << "3 + 4 = " << TemplateAdd(3, 4) << std::endl;
+    std::cout << "2.3 + 4.9 = " << TemplateAdd(2.3, 4.9) << std::endl;
+    std::cout << "Hello + World = " << TemplateAdd((std::string)"Hello", (std::string)"World") << std::endl;
 }
 
 int main()
