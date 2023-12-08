@@ -3,6 +3,7 @@
 
 /********* Include statements *********/
 
+#include <iostream>
 #include "StaticInClasses.hpp"
 #include "ConstructorDestructor.hpp"
 #include "ClassInheritance.hpp"
