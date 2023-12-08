@@ -10,4 +10,9 @@
 
 /******** Function definitions ********/
 
+// template<typename T> T TemplateAdd(T a, T b)
+// {
+//     return a + b;
+// }
+
 /**************************************/
