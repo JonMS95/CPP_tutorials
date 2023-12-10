@@ -4,6 +4,7 @@
 /********* Include statements *********/
 
 #include <iostream>
+#include <string>
 
 /**************************************/
 
