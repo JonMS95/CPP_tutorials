@@ -30,6 +30,13 @@
 // It makes sense indeed, since the object instance to be copied is required when performing the
 // "variable_of_class_X_1 = variable_of_class_X_0" statement.
 
+// Copy constructor is also used in functions that take input parameters of a given class type. If a reference is passed to the
+// function (see "SmartPrintString" friend function below), then nothing special will happen, as it takes a reference as input
+// argument. But if the variable itself is provided, then a copy of the input variable is created (which, as we already know, will
+// just exist locally, within the scope of that function), as it happens in the "DummyPrintString" function. Obviously, the destructor
+// method is called as well when exiting the function, but as copy constructor performs a deep copy, there's nothing we should be
+// worried about ;) .
+
 /********** Class prototypes **********/
 
 class CopyConstructors
@@ -44,6 +51,8 @@ public:
     CopyConstructors(const CopyConstructors& other);
     char& operator[](unsigned int index);
     friend std::ostream& operator<<(std::ostream& stream, const CopyConstructors& copy_constructors);
+    friend void DummyPrintString(CopyConstructors other);
+    friend void SmartPrintString(CopyConstructors& other);
 };
 
 /**************************************/
