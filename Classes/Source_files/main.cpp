@@ -12,6 +12,7 @@
 #include "Visibility.hpp"
 #include "ConstructorInitializerList.hpp"
 #include "OperatorOverloading.hpp"
+#include "CopyConstructors.hpp"
 
 /**************************************/
 
@@ -26,6 +27,7 @@
 #define MSG_TEST_VISIBILITY             "Tetsing Visibility."
 #define MSG_TEST_CONSTRUCTOR_INIT_LIST  "Testing ConstructorInitializerList."
 #define MSG_TEST_OPERATOR_OVERLOADING   "Testing OperatorOverloading."
+#define MSG_TEST_COPY_CONSTRUCTORS      "Testing CopyConstructors."
 
 /**************************************/
 
@@ -193,6 +195,28 @@ void TestOperatorOverloading()
     ShowCoordinatesAsVector(oo6);
 }
 
+void TestCopyConstructors()
+{
+    PrintTestHeader(MSG_TEST_COPY_CONSTRUCTORS);
+
+    CopyConstructors cc1("Hello!");
+    CopyConstructors cc2 = cc1;
+
+    cc2[1] = 'a';
+
+    std::cout << cc1 << std::endl;
+    std::cout << cc2 << std::endl;
+
+    // The couple of instances above have been copied "as is", it's to say, cc2 is just a shallow copy of cc1.
+    // This way, the pointers within the class have been copied without replicating their content. This means
+    // that pointers in both instances contain the same memory addresses. Therefore, if any of the strings
+    // stored in m_buffer is modified, it will be changed for both instances. What we have used above in
+    // "cc2 = cc1" is the default constructor. However, if we were to create a new string (with the same content
+    // as the one in the original variable, but pointing at a new memory address), we would have to write a
+    // copy constructor, which would perform a "deep copy". Problems may be found when executing the destructor
+    // method as well, as the memory address would be freed twice.
+}
+
 int main()
 {
     TestStaticInClasses();
@@ -203,6 +227,7 @@ int main()
     TestVisibility();
     TestConstructorInitializerList();
     TestOperatorOverloading();
+    TestCopyConstructors();
 
     return 0;
 }
