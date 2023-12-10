@@ -215,6 +215,14 @@ void TestCopyConstructors()
     // as the one in the original variable, but pointing at a new memory address), we would have to write a
     // copy constructor, which would perform a "deep copy". Problems may be found when executing the destructor
     // method as well, as the memory address would be freed twice.
+
+    std::cout << std::endl << "Using dummy print string friend function, which creates a copy of the given \"CopyConstructors\" variable." << std::endl;
+    DummyPrintString(cc1);
+    DummyPrintString(cc2);
+
+    std::cout << std::endl << "Using dummy print string friend function, which takes a reference of the given \"CopyConstructors\" variable." << std::endl;
+    SmartPrintString(cc1);
+    SmartPrintString(cc2);
 }
 
 int main()
