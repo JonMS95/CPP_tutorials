@@ -5,7 +5,7 @@
 
 #include <iostream>
 #include <string>
-#include <initializer_list>
+#include <vector>
 
 /**************************************/
 
@@ -18,7 +18,7 @@ private:
     T m_buffer[N];
     std::string m_name;
 
-    void AssignValues(std::initializer_list<T> values)
+    void AssignValues(const std::vector<T>& values)
     {
         if(values.size() > this->m_size)
         {
@@ -37,14 +37,11 @@ private:
     }
 
 public:
-    Dummy(void): m_name("DEFAULT")
-    {
-        std::cout << "Using constructor with default values." << std::endl;
-    }
+    Dummy(void): m_name("DEFAULT") { std::cout << "Using constructor with default values." << std::endl; }
 
     Dummy(const std::string& name_input): m_name(name_input){}
 
-    Dummy(const std::string& name_input, std::initializer_list<T> values): m_name(name_input)
+    Dummy(const std::string& name_input, const std::vector<T>& values): m_name(name_input)
     {
         std::cout << "Using constructor with specified input parameters." << std::endl;
         this->AssignValues(values);
@@ -56,24 +53,6 @@ public:
     {
         std::copy(std::begin(other.m_buffer), std::end(other.m_buffer), std::begin(this->m_buffer));
         this->m_name += " (copy)";
-    }
-
-    Dummy& operator=(std::initializer_list<T> values)
-    {
-        this->AssignValues(values);
-
-        return *this;
-    }
-
-    T& operator[](int index)
-    {
-        if( (index < 0) || (index >= m_size) )
-        {
-            std::cout << "Index is out of boundaries! Returning last index element." << std::endl;
-            return this->m_buffer[this->m_size - 1];
-        }
-
-        return this->m_buffer[index];
     }
 
     std::string GetName(void) { return this->m_name; }
@@ -101,9 +80,39 @@ public:
         return ret;
     }
 
-    void PrintElements(void)
+    void PrintElements(void) { std::cout << this->GetDummyAsString() << std::endl; }
+
+    Dummy& operator=(const std::vector<T>& values)
     {
-        std::cout << this->GetDummyAsString() << std::endl;
+        this->AssignValues(values);
+
+        return *this;
+    }
+    
+    T& operator[](int index)
+    {
+        if( (index < 0) || (index >= m_size) )
+        {
+            std::cout << "Index is out of boundaries! Returning last index element." << std::endl;
+            return this->m_buffer[this->m_size - 1];
+        }
+
+        return this->m_buffer[index];
+    }
+
+    static void PrintSharedPointerOwners(const std::shared_ptr<Dummy<T, N>>& other)
+    {
+        std::cout << "Number of owners of memory allocated by shared pointer: "<< other.use_count() << std::endl;
+    }
+
+    static void CheckWeakPointerAbailavility(const std::weak_ptr<Dummy<T, N>>& other)
+    {
+        if(auto shared = other.lock())
+            std::cout << "Using weak_ptr to access stored resource.";
+        else
+            std::cout << "Resource in weak_ptr has already been deleted.";
+        
+        std::cout << std::endl;
     }
 };
 
