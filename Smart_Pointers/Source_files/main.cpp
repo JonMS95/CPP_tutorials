@@ -108,6 +108,8 @@ void TestSmartPointers()
 
     /************ Weak pointer ************/
     PrintTestHeader(MSG_TEST_WEAK_POINTERS);
+    // Weak pointers provide a non-owning refernce to an object. Different from shared pointers, these will not create any reference counter
+    // whatsoever. The aim of this type of pointers is to prevent the code from creating circular references.
 
     {
         std::shared_ptr<Dummy<std::string, 2>> pDummy4 = std::make_shared<Dummy<std::string, 2>>();
