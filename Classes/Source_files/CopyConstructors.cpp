@@ -45,6 +45,14 @@ CopyConstructors::CopyConstructors(const CopyConstructors& other):
 
 /******** Function definitions ********/
 
+CopyConstructors& CopyConstructors::operator=(const CopyConstructors& other)
+{
+    this->m_buffer  = other.m_buffer;
+    this->m_size    = other.m_size;
+
+    return *this;
+}
+
 std::ostream& operator<<(std::ostream& stream, const CopyConstructors& copy_constructors)
 {
     stream << copy_constructors.m_buffer;

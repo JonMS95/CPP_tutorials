@@ -37,6 +37,10 @@
 // method is called as well when exiting the function, but as copy constructor performs a deep copy, there's nothing we should be
 // worried about ;) .
 
+// Note: at times, it may be wanted to avoid object copying for any reason. In that case, the functions that are meant to do so should
+// be simply "deleted", it's to say, they should be equal to "delete". By the way, any function that is equal to delete cannot be called,
+// so this goes for the "=" operator overloading as well, which is commonly used for the same purpose.
+
 /********** Class prototypes **********/
 
 class CopyConstructors
@@ -49,6 +53,12 @@ public:
     CopyConstructors(const char* string_input);
     ~CopyConstructors(void);
     CopyConstructors(const CopyConstructors& other);
+    
+    // If we wanted to avoid object copying, we should use the definition below:
+    // CopyConstructors(const CopyConstructors& other) = delete;
+    // This way, we can guarantee that the object instance is unique (same as it happens when working with std::unique_ptr).
+    
+    CopyConstructors& operator=(const CopyConstructors& other);
     char& operator[](unsigned int index);
     friend std::ostream& operator<<(std::ostream& stream, const CopyConstructors& copy_constructors);
     friend void DummyPrintString(CopyConstructors other);
