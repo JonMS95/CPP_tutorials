@@ -70,6 +70,12 @@ void basicLambdaFunctions(void)
         std::cout << text << std::endl;
     };
 
+    // Lambda functions can call others, although it's necessary to include them in the variables-to-capture list beforehand.
+    auto print_sum = [sum, print_text](int a, int b, std::string text) -> void
+    {
+        print_text(text + std::to_string(sum(a, b)));
+    };
+
     print_text("a = " + std::to_string(a) + ", b = " + std::to_string(b));
     print_text(get_str(a) + " + " + get_str(b) + " = " + get_str(sum(a, b)));
     print_text(get_str(a) + " * 2 = " + get_str(mult_a_by_two()));
@@ -77,4 +83,5 @@ void basicLambdaFunctions(void)
     print_text(get_str(a) + " + " + get_str(b) + " = " + get_str(sum_a_b()));
     subtract_b_from_a();
     print_text("After a -= b, a = " + get_str(a));
+    print_sum(a, b, "This is a sum:");
 }
