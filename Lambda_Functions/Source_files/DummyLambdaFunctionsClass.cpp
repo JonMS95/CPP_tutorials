@@ -1,5 +1,10 @@
 #include "DummyLambdaFunctionsClass.hpp"
 
+/*
+Lambda functions can also be used within classes. In such case, it's quite common to capture "this" scope variable (which refers to the
+current class object instance). It can be specially useful when trying to reference class members or methods.
+*/
+
 Dummy::Dummy(unsigned int age_input, const std::string name_input): age(age_input), name(name_input)
 {
     auto print_attr = [this]()
