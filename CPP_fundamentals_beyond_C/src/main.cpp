@@ -38,12 +38,13 @@ void TestFunctionOverloading(void)
 
     std::cout << "add(1, 2): " << add(1, 2) << std::endl;
     std::cout << "add(1.2, 3.4): " << add(1.2, 3.4) << std::endl;
-    std::cout << "add(1, 2) (c == 1 by default): " << add(1, 3) << std::endl;
+    std::cout << "mult(3, 2) (c == 1 by default): " << mult(3, 2) << std::endl;
 }
 
 int main()
 {
     TestReferences();
+    TestFunctionOverloading();
 
     return 0;
 }

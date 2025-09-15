@@ -3,6 +3,6 @@
 
 int add(const int& a, const int& b);
 double add(const double& a, const double& b);
-int add(const int& a, const int& b, const int c = 0);
+int mult(const int a, const int b, const int c = 1);
 
 #endif
