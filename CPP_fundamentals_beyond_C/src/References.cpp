@@ -3,10 +3,14 @@
 
 /*
 References are a C++ feature that make developer's lives easier was far as pointer handling is
-concerned. When passing a pointer to a function in C++, a reference can be passed instead
-making al the pointer reference/dereference processes easier. Referenced values can be treated
-just as if they were no references at all. Same as with pointed variables, their values remain
-after a function call.
+concerned.
+When passing a pointer to a function in C++, a reference can be passed instead making al the
+pointer reference/dereference processes easier.
+Referenced values can be treated just as if they were no references at all. Same as with pointed
+variables, their values remain after a function call.
+Newly created references cannot be returned from within a function. As an example, if a variable
+is created into a given function's scope, returning a reference to such variable would not be
+safe at all.
 
 Key takeaways:
 
