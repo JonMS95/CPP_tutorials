@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include "References.hpp"
+#include "FunctionOverloading.hpp"
 
-#define MSG_TEST_HEADER     "*********************************"
-#define MSG_TEST_REFERENCES "Testing References."
+#define MSG_TEST_HEADER                 "*********************************"
+#define MSG_TEST_REFERENCES             "Testing references."
+#define MSG_TEST_FUNCTION_OVERLOADING   "Testing function overloading."
 
 /******** Function definitions ********/
 
@@ -28,6 +30,15 @@ void TestReferences(void)
     int& ref = getElement(arr, 2);
 
     std::cout << "ref: " << ref << std::endl;
+}
+
+void TestFunctionOverloading(void)
+{
+    PrintTestHeader(MSG_TEST_FUNCTION_OVERLOADING);
+
+    std::cout << "add(1, 2): " << add(1, 2) << std::endl;
+    std::cout << "add(1.2, 3.4): " << add(1.2, 3.4) << std::endl;
+    std::cout << "add(1, 2) (c == 1 by default): " << add(1, 3) << std::endl;
 }
 
 int main()
