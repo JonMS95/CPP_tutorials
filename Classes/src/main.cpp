@@ -121,6 +121,8 @@ void TestVirtualFunctions()
     VirtualFunctionsDerived vf4("JON");
     VirtualFunctionsBase vf5 = VirtualFunctionsDerived("JMS");
     std::cout << vf5.Greeting() << std::endl;
+
+    pvf2->SayBye();
 }
 
 void TestInterfaces()
