@@ -18,10 +18,11 @@
 // movable entity in a videogame.
 
 // On the other hand, a derived class will be defined as well, which will define a player. Thus,
-// a name should be provided for it additionally to those mtehods and variables that are already
+// a name should be provided for it additionally to those methods and variables that are already
 // included within the base class. Derived class will always be a superset of the base class,
 // it's t say, it will always have all of the methods and variables that are found within the base
-// class plus (possibly) something else.
+// class plus (possibly) something else. Keep in mind that members/methods tagged as private are
+// also inherited despite them not being accessible for the inheritor class.
 
 /********** Class prototypes **********/
 

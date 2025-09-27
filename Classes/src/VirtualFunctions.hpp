@@ -27,6 +27,22 @@
 // what this does behind the scenes is a v-table, which tells the compiler to point at the proper function
 // at runtime. Keep in mind that this implies a performance penalty toll, so it should be used with care.
 
+// The point above has subtle nuances. Just to make it simpler: if a pointer is used to point at a derived
+// class object, but the pointer's type is the same as the base class', then:
+//  ·If called method is non-virtual, the base class method will be called.
+//  ·Otherwise, it will call the method belonging to the derived class (which has been overwritten in such
+//  derived class) even if the type of the pointer in question is the same as the base class instead of the
+//  derived one.
+
+// Using virtual in base classes for destructor methods(as long as they are meant to be extended by any
+// derived classes) is crucial since it may lead only base class destructors to be called.
+// In case no explicit destructor is defined within the base class, "default" keyword may be used alongside
+// virtual for such purpose (see VirtualFunctionsBase class definition below).
+
+// Accessible elements can be explicitly called from inheritor class by using the "::" operator. This way,
+// there's no need to rewrite the whole base class method again if the aim is to add something to the base
+// method.
+
 // Since C++ 11, "override" keyword can be used to mark functions to be overriden in derived class.
 // It is not really mandatory, however it is still strongly recommendable in order to make the code
 // more readable as well as bug-proof. 
@@ -38,6 +54,8 @@ class VirtualFunctionsBase
 public:
     std::string Greeting(void);
     virtual std::string Talk(void);
+    virtual ~VirtualFunctionsBase() = default;
+    virtual void SayBye(void);
 };
 
 class VirtualFunctionsDerived : public VirtualFunctionsBase
@@ -48,6 +66,7 @@ public:
     VirtualFunctionsDerived(const std::string& name_input);
     std::string Greeting(void);
     std::string Talk(void) override;
+    void SayBye(void) override;
 };
 
 /**************************************/
