@@ -4,11 +4,13 @@
 #include "References.hpp"
 #include "FunctionOverloading.hpp"
 #include "Namespaces.hpp"
+#include "ConstRelatedKeywords.hpp"
 
 #define MSG_TEST_HEADER                 "*********************************"
 #define MSG_TEST_REFERENCES             "Testing references."
 #define MSG_TEST_FUNCTION_OVERLOADING   "Testing function overloading."
 #define MSG_TEST_NAMESPACES             "Testing namespaces."
+#define MSG_TEST_CONST_RELATED_KEYWORDS "Testing const related keywords."
 
 /******** Function definitions ********/
 
@@ -51,11 +53,25 @@ void TestNamespaces(void)
     std::cout << "Math::mult(3, 2): " << Math::mult(3, 2) << std::endl;
 }
 
+void TestConstRelatedKeywords(void)
+{
+    PrintTestHeader(MSG_TEST_CONST_RELATED_KEYWORDS);
+
+    std::cout << "squareConstExpr(5): " << squareConstExpr(5) << std::endl;
+    std::cout << "squareConstEval(7): " << squareConstEval(7) << std::endl;
+
+    const ConstKeywordsDummyClass ckdc;
+    std::cout << "Counter (mutable variable) before: " << ckdc.getCounter() << std::endl;
+    ckdc.incrementCounter();
+    std::cout << "Counter (mutable variable) afterwards: " << ckdc.getCounter() << ". Still modifiable even  when declaring the object as const." << std::endl;
+}
+
 int main()
 {
-    TestReferences();
-    TestFunctionOverloading();
-    TestNamespaces();
+    TestReferences              ();
+    TestFunctionOverloading     ();
+    TestNamespaces              ();
+    TestConstRelatedKeywords    ();
 
     return 0;
 }
