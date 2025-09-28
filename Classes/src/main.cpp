@@ -93,6 +93,7 @@ void TestClassInheritance()
     ci.Move(5, 4);
     ci.PrintCoordinates();
     ci.PrintName();
+    ci.Greeting();
 }
 
 void TestVirtualFunctions()
