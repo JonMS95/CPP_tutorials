@@ -47,6 +47,11 @@
 // It is not really mandatory, however it is still strongly recommendable in order to make the code
 // more readable as well as bug-proof. 
 
+// Function shadowing (replacing base class functions by others in derived classes) is considered to be
+// compile time polymorphism since it's always known which method to be called. Overriding, in contrast,
+// is knwon as runtime polymorphism as the v-table (something like a table to the base class function
+// pointers) should be created once the program is being executed (it cannot be done beforehand).
+
 /********** Class prototypes **********/
 
 class VirtualFunctionsBase
