@@ -5,6 +5,7 @@
 #include <vector>
 #include <deque>
 #include <list>
+#include <forward_list>
 
 /**************************************/
 
@@ -26,16 +27,19 @@ void PrintTestHeader(const char* header)
 }
 
 template <typename T>
-void printSequenceContainer(const std::string var_name, const T& var)
+void printSequenceContainer(const std::string var_name, const T& var, const int var_size = -1)
 {
     std::cout << var_name << " = {";
 
     int idx = 0;
 
+    // Works even if container has no .size() (like forward_list).
+    const int max_size = std::distance(var.begin(), var.end());
+
     for(const auto& v : var)
     {
         std::cout << v;
-        if(idx++ < (var.size() - 1))
+        if(idx++ < (max_size - 1))
             std::cout << ", ";
     }
 
@@ -80,15 +84,43 @@ void TestSequenceContainers(void)
     dq.pop_back();
     dq.pop_front();
 
-    dq.emplace_back(1);
+    dq.emplace_back(1); // Same as with vectors, emplace_ or push_ can be used preferrably depending on the case.
     dq.emplace_front(0);
 
     printSequenceContainer("dq", dq);
 
-    // Lists: doubly linked lists. each elemented is linked to both the previous and the following.
-    // No random access (it must be traversed).
-    std::list<char> dlist = {'a', 'b', 'c'};
+    // Lists: doubly-linked lists. each elemented is linked to both the previous and the following.
+    // No random access (it must be traversed). It can be traversed both forward or backwards since
+    // each node is doubly-linked.
+    std::list<char> dlist = {'x', 'b', 'z'};
+    
+    dlist.pop_front();
+    dlist.pop_back();
+    dlist.emplace_front('a'); // Again, emplace_ or push_ methods can be used alongside doubly linked lists (depending on the case). 
+    dlist.emplace_back('c');
     printSequenceContainer("dlist", dlist);
+
+    // Forward lists: singly-linked lists. Can only be traversed in a single direction (forward).
+    // A bit lighter than doubly-linked lists (just a single pointer vs two). Memory efficient.
+    // Fun fact: forwrd lists have no .size() method, thus size has to be manually calculated by
+    // forward iterating the list.
+    std::forward_list<std::string> flist =
+    {
+        "Montag"    ,
+        "Dienstag"  ,
+        "Mittwoch"  ,
+        "Donnerstag",
+        "Freitag"   ,
+        "Samstag"   ,
+        "Sonntag"   ,
+    };
+
+    flist.pop_front();
+    flist.push_front("Monday");
+    flist.remove("Sonntag");
+    flist.insert_after(std::find(flist.begin(), flist.end(), "Samstag"), "Domingo");
+
+    printSequenceContainer("flist", flist);
 }
 
 int main()
