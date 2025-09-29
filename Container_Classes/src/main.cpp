@@ -79,13 +79,13 @@ void TestSequenceContainers(void)
         printSequenceContainer(("vec_1[" + std::to_string(i) + "]"), vec_1[i]);
 
     // Double queues: like vectors but optimized for insert / remove at both ends.
-    std::deque<int> dq = {4, 5, 6};
+    std::deque<int> dq = {100, 2, 300};
 
     dq.pop_back();
     dq.pop_front();
 
-    dq.emplace_back(1); // Same as with vectors, emplace_ or push_ can be used preferrably depending on the case.
-    dq.emplace_front(0);
+    dq.emplace_back(3); // Same as with vectors, emplace_ or push_ can be used preferrably depending on the case.
+    dq.emplace_front(1);
 
     printSequenceContainer("dq", dq);
 
