@@ -83,6 +83,10 @@ public:
     FriendClass(const std::string& name);
 };
 
+// Even though the example above shows an example in which the friend class includes an instance of the class it's
+// friend with, this is not strictly mandatory. If, for instance, a method taking a reference to a class it's friends
+// with was provided, it could still be able to access class' methods / members.
+
 /**************************************/
 
 #endif
