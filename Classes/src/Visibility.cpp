@@ -48,6 +48,16 @@ void VisibilityDerived::DoubleCoordinates(void)
     this->SetCoordinates(coordinates[0] * 2, coordinates[1] * 2);
 }
 
+ClassWithFriend::ClassWithFriend(const std::string& name): name(name)
+{
+    std::cout << "Created ClassWithFriend instance with name: " << this->name << std::endl; 
+}
+
+FriendClass::FriendClass(const std::string& name): cwf(name)
+{
+    std::cout << "Created FriendClass instance with name: " << cwf.name << std::endl; 
+}
+
 /**************************************/
 
 /******** Function definitions ********/

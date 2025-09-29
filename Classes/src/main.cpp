@@ -160,6 +160,8 @@ void TestVisibility()
 
     SetCoordinatesFromTheOutside(v1, 8, 9);
     ShowCoordinatesFromTheOutside(v1);
+
+    FriendClass fc("Joey");
 }
 
 void TestConstructorInitializerList()

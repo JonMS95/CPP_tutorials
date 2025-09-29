@@ -55,6 +55,34 @@ public:
     void DoubleCoordinates(void);
 };
 
+// On top of friend functions, friend classes do also exist. Similar to friend functions, friend
+// classes can access every member / function of the class they are friends with. In the example
+// below, a class called "ClassWithFriend" will be declared. Another class, namely FriendClass
+// will be allowed to access every method / member within ClassWithFriend.
+// Note that friend relationship between classes is not bidirectional: if FriendClass does not
+// declare ClassWithFriend as its friend, then ClassWithFriend won't be able to access anything
+// in FriendClass.
+
+class ClassWithFriend
+{
+private:
+    std::string name;
+public:
+    ClassWithFriend(void) = delete;
+    ClassWithFriend(const std::string& name);
+
+    friend class FriendClass; // Declare FriendClass as friend, granting FriendClass access to every member / method within ClassWithFriend.
+};
+
+class FriendClass
+{
+private:
+    ClassWithFriend cwf;
+public:
+    FriendClass(void) = delete;
+    FriendClass(const std::string& name);
+};
+
 /**************************************/
 
 #endif
