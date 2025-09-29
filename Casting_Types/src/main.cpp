@@ -1,7 +1,6 @@
 /********* Include statements *********/
 
 #include <iostream>
-#include <memory>
 #include "CastingTypesBaseClass.hpp"
 #include "CastingTypesDerivedClass.hpp"
 
@@ -9,7 +8,7 @@
 
 /********** Define statements *********/
 
-#define MSG_TEST_HEADER                 "*********************************"
+#define MSG_TEST_HEADER            "*********************************"
 #define MSG_TEST_STATIC_CAST       "Testing static casting."
 #define MSG_TEST_DYNAMIC_CAST      "Testing dynamic casting."
 #define MSG_TEST_CONST_CAST        "Testing const casting."
