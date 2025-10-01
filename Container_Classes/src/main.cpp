@@ -8,9 +8,16 @@
 #include <list>
 #include <forward_list>
 
+//#include <vector>
 #include <stack>
 #include <queue>
 #include <algorithm>
+
+#include <map>
+#include <set>
+#include <unordered_map>
+#include <unordered_set>
+#include <sstream>
 
 /**************************************/
 
@@ -23,7 +30,6 @@
 #define MSG_TEST_UNORDERED_CONTAINERS   "Testing unordered containers."
 
 #define PRINT_SEQ_CONT(VAR_NAME)    printSequenceContainer(#VAR_NAME, VAR_NAME)
-#define PRINT_CONT_ADAPT(VAR_NAME)  printContainerAdaptor(#VAR_NAME, VAR_NAME)
 
 /**************************************/
 
@@ -131,27 +137,10 @@ void TestSequenceContainers(void)
     PRINT_SEQ_CONT(flist);
 }
 
-template <typename T>
-void printContainerAdaptor(const std::string& var_name, const T& var)
-{
-    std::cout << var_name << " = {";
-
-    T var_copy = var;
-
-    while(!var_copy.empty())
-    {
-        std::cout << var_copy.top();
-        var_copy.pop();
-        
-        if(!var_copy.empty())
-            std::cout << ", ";
-    }
-
-    std::cout << "}" << std::endl;
-}
-
 void TestContainerAdaptors(void)
 {
+    PrintTestHeader(MSG_TEST_CONTAINER_ADAPTORS);
+
     // Stack: LIFO queue. Wraps std::deque by default, but can use vector or even list.
     // Only allows operations that make sense for a stack: push, pop, top, empty, size.
     std::stack<int> st_0;
@@ -233,19 +222,196 @@ void TestContainerAdaptors(void)
     //   3    25
     //  / \   /
     // 8  15  2
-    std::vector<int> tree_values = {10, 3, 25, 8, 15, 2};
+    std::vector<int> tree_values_0 = {10, 3, 25, 8, 15, 2};
     std::priority_queue<int> h_0;
     
-    for(int n : tree_values)
+    for(int n : tree_values_0)
         h_0.push(n);
+
+    // After having inserted every value in the heap, the heap will remain as follows.
+    //     25
+    //    /  \
+    //  15    10
+    //  / \   /
+    // 8  3  2
+   
+    auto print_int_heap = [](const std::string& h_name, std::priority_queue<int> h) -> void
+    {
+        std::vector<int> temp_vec;
+        
+        while(!h.empty())
+        {
+            temp_vec.emplace_back(h.top());
+            h.pop();
+        }
+
+        printSequenceContainer(h_name, temp_vec);
+    };
+
+    printSequenceContainer("vector_before_h_0", tree_values_0);
+    print_int_heap("h_0", h_0);
+
+    std::vector<int> h_1 = {10, 20, 5, 30, 15};
+
+    printSequenceContainer("vector_before_h_1", h_1);
+
+    std::make_heap(h_1.begin(), h_1.end()); // A heap can also be created directly from a vector.
+
+    PRINT_SEQ_CONT(h_1);
+
+    // Note that satisfying heap condition (root node is greater/lower/whatever than its children nodes) does not imply it's ordered in any way.
+    // sort_heap can be used to do so, but the heap structure will be destroyed.
+
+    std::sort_heap(h_1.begin(), h_1.end());
     
-    // printSequenceContainer("h_0", static_cast<std::vector<int>>(h_0));
+    printSequenceContainer("h_1 after sorting (destroyed heap)", h_1);
+}
+
+void TestAssociativeContainers(void)
+{
+    PrintTestHeader(MSG_TEST_ASSOCIATIVE_CONTAINERS);
+
+    // Maps: balanced binary trees under the hood. Keys are immutable. Collection of key-value std::pair elements.
+    // Does not allow duplicate keys. Can be defined directly as follows. Basic operations include: insert ([]),
+    // count, find, at, size.
+    std::map<std::string, unsigned int> name_2_age_map = 
+    {
+        {"Alice"    , 23},
+        {"Bob"      , 25},
+        {"Charlie"  , 30},
+    };
+
+    auto print_map = [](const std::string& map_name, auto input_map) -> void
+    {
+        size_t input_map_size = input_map.size();
+        size_t idx = 0;
+
+        std::cout << map_name << " = { ";
+        
+        for(auto it = input_map.begin(); it != input_map.end(); it++)
+        {
+            std::cout << "{" << it->first << ", " << it->second << "}";
+
+            if(idx++ < (input_map_size - 1))
+                std::cout << ", ";
+        }
+
+        std::cout << " }" << std::endl;
+    };
+
+    print_map("name_2_age_map", name_2_age_map);   
+
+    std::map<int, int> histogram_map;
+    std::vector<int> hist_values = {1, 23, 1, 45, 33, 67, 89, 33, 1};
+
+    for(int n : hist_values)        // Values can be added one by one too.
+        ++histogram_map[n];
+    
+    if(histogram_map.count(33))     // You can count how many keys with a given value (although it's always 1 or 0 in single key maps).
+        histogram_map.at(33) = 33;  // Maps can also be accessed by using .at() method alongside a valid key. It will return an out of bounds exception if the target key does not exist.
+
+    print_map("histogram_map", histogram_map);
+
+    // Sets: again, a balanced binary tree. It's an ordered container that stores unique elements of a specified type.
+    // It's automatically and duplicates are not allowed. Basic operations include: insert, erasem findm count, size.
+    std::vector<int> set_values = hist_values;
+    std::set<int> set_0;   
+ 
+    for(int n : set_values)
+        set_0.insert(n);
+
+    auto print_set = [](const std::string& set_name, auto input_set) -> void
+    {
+        size_t input_set_size = input_set.size();
+        size_t idx = 0;
+
+        std::cout << set_name << " = { ";
+        
+        for(auto s : input_set)
+        {
+            std::cout << s;
+            
+            if(idx++ < (input_set_size - 1))
+                std::cout << ", ";
+        }
+
+        std::cout << " }" << std::endl;
+    };
+
+    print_set("set_0", set_0);
+
+    std::set<std::string> set_1 = {"Ein", "Zwei", "Drei", "Vier"};  // Sets can be defined and declared in a single statements too, same as if they were a mere vector.
+    
+    set_1.erase("Drei");    // Erase elements by using .erase() method alongside the element to be removed.
+    
+    if(!set_1.count("Acht"))
+        set_1.insert("Acht");
+
+    print_set("set_1", set_1);
+
+    // Multimaps: same as maps, but allowing multiple values for each key. Different from maps, multimaps have no []
+    // operator overloading (use .insert() instead). When it comes to retrieval, .at(method) cannot be used either,
+    // but three alternatives exist in exchange:
+    // ·.equal_range(): returns all matches.
+    // ·.find(): returns first occurrence.
+    std::multimap<int, std::string> age_2_name_map =
+    {
+        {30 ,   "Jon"  },
+        {29 ,   "Ander"},
+        {30,    "Marta"},
+        {28,    "Cyrin"},
+    };
+
+    auto print_multimap = [](const std::string& multimap_name, const auto& input_multimap) -> void
+    {
+        using MapType   = std::decay_t<decltype(input_multimap)>;
+        using KeyType   = typename MapType::key_type;
+        using ValueType = typename MapType::mapped_type;
+
+        std::set<KeyType> multimap_keys;
+        for (auto it = input_multimap.begin(); it != input_multimap.end(); ++it)
+            multimap_keys.insert(it->first);
+
+        std::cout << multimap_name << " = { ";
+
+        std::vector<ValueType> key_values;
+
+        for (auto key : multimap_keys)
+        {
+            auto key_range = input_multimap.equal_range(key);
+            key_values.clear();
+
+            for (auto it = key_range.first; it != key_range.second; ++it)
+                key_values.emplace_back(it->second);
+
+            std::ostringstream oss;
+            oss << key; // requires operator<< for KeyType
+            printSequenceContainer(oss.str(), key_values);
+        }
+
+        std::cout << " }" << std::endl;
+    };
+
+    print_map("age_2_name_map", age_2_name_map);
+    print_multimap("grouped_age_2_name_map", age_2_name_map);
+
+    // Multisets: sames as sets, store elements in ascending order. It allows duplicated elements.
+    std::multiset<int> m_set_0;
+    m_set_0.insert(5);
+    m_set_0.insert(1);
+    m_set_0.insert(5);
+    m_set_0.insert(3);
+    m_set_0.insert(2);
+    m_set_0.insert(2);
+
+    print_set("m_set_0", m_set_0);
 }
 
 int main()
 {
     TestSequenceContainers();
     TestContainerAdaptors();
+    TestAssociativeContainers();
 
     return 0;
 }
