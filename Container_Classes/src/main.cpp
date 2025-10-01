@@ -356,10 +356,13 @@ void TestAssociativeContainers(void)
     // ·.find(): returns first occurrence.
     std::multimap<int, std::string> age_2_name_map =
     {
-        {30 ,   "Jon"  },
-        {29 ,   "Ander"},
-        {30,    "Marta"},
-        {28,    "Cyrin"},
+        {30 ,   "Jon"   },
+        {29 ,   "Ander" },
+        {30,    "Marta" },
+        {28,    "Cyrin" },
+        {25,    "Leire" },
+        {30,    "Juan"  },
+        {25,    "Manu"  },
     };
 
     auto print_multimap = [](const std::string& multimap_name, const auto& input_multimap) -> void
@@ -372,7 +375,7 @@ void TestAssociativeContainers(void)
         for (auto it = input_multimap.begin(); it != input_multimap.end(); ++it)
             multimap_keys.insert(it->first);
 
-        std::cout << multimap_name << " = { ";
+        std::cout << multimap_name << " = " << std::endl << "{ " << std::endl;
 
         std::vector<ValueType> key_values;
 
@@ -396,6 +399,7 @@ void TestAssociativeContainers(void)
     print_multimap("grouped_age_2_name_map", age_2_name_map);
 
     // Multisets: sames as sets, store elements in ascending order. It allows duplicated elements.
+    // Allows insert, erase, count, find, lower/upper_bound, equal_range.
     std::multiset<int> m_set_0;
     m_set_0.insert(5);
     m_set_0.insert(1);
@@ -407,11 +411,39 @@ void TestAssociativeContainers(void)
     print_set("m_set_0", m_set_0);
 }
 
+void TestUnorderedContainers(void)
+{
+    PrintTestHeader(MSG_TEST_UNORDERED_CONTAINERS);
+
+    // Unordered map: same as common maps, but with faster access ( O(1) vs O(log(n)) ). Standard library provides std::hash for
+    // basic types like int, std::tring and so on. For other types (such as std::pair) there's no built-in hash
+    // function, so a custom one has to be defined in such cases.
+    std::unordered_map<int, std::string> u_map_0 =
+    {
+        {1  ,   "Uno"   },
+        {4  ,   "Quatre"},
+        {3  ,   "Hiru"  },
+        {2  ,   "Zwei"  },
+    };
+
+    auto custom_hash = [](const std::pair<int,int>& p)
+    {
+        return std::hash<int>()(p.first) ^ (std::hash<int>()(p.second) << 1);
+    };  // A custom function is required in this case since no built-in has exists for std::pair<int, int>-like keys.
+
+    std::unordered_map<std::pair<int, int>, std::string, decltype(custom_hash)> u_map_1(0, custom_hash); // Should tell initial size (0) since no constructor with just the hash function exists.
+
+    u_map_1.insert({{1, 2}, "A"});
+    u_map_1.insert({{3, 4}, "B"});
+    u_map_1.insert({{5, 6}, "C"});
+}
+
 int main()
 {
     TestSequenceContainers();
     TestContainerAdaptors();
     TestAssociativeContainers();
+    TestUnorderedContainers();
 
     return 0;
 }
