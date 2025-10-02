@@ -13,6 +13,44 @@
 
 /******** Function definitions ********/
 
+// The function below may have been a template, and try to adapt to more types, but it's simply not worth
+// it as the aim is to brush up on container adaptor types. 
+void printIntStackOrHeap(const std::string& var_name, auto var)
+{
+    std::vector<int> temp_vec;
+    
+    while (!var.empty())
+    {
+        temp_vec.emplace_back(var.top());   
+        var.pop();
+    }
+
+    printSequenceContainer(var_name, temp_vec);
+}
+
+inline void printIntStack(const std::string& var_name, std::stack<int> st)
+{
+    printIntStackOrHeap(var_name, st);
+}
+
+inline void printIntHeap(const std::string& var_name, std::priority_queue<int> h)
+{
+    printIntStackOrHeap(var_name, h);
+}
+
+void printIntQueue(const std::string& var_name, std::queue<int> q)
+{
+    std::vector<int> temp_vec;
+    
+    while (!q.empty())
+    {
+        temp_vec.emplace_back(q.front());   
+        q.pop();
+    }
+
+    printSequenceContainer(var_name, temp_vec);
+}
+
 void containerAdaptorsStacks(void)
 {
     // Stack: LIFO queue. Wraps std::deque by default, but can use vector or even list.
@@ -22,24 +60,11 @@ void containerAdaptorsStacks(void)
     for(int i = 0; i < 5; i++)  // Push elements to the stack.
         st_0.push(i);
 
-    auto print_int_stack = [](const std::string& st_name, std::stack<int> st) -> void
-    {
-        std::vector<int> temp_vec;
-        
-        while(!st.empty())
-        {
-            temp_vec.emplace_back(st.top());
-            st.pop();
-        }
-
-        printSequenceContainer(st_name, temp_vec);
-    };
-
-    print_int_stack("st_0", st_0);
+    printIntStack("st_0", st_0);
     
     std::stack<int> st_1 = static_cast<std::stack<int>>(std::deque<int>{5, 6, 7, 8, 9}); // stacks can be initialized from deques.
     
-    print_int_stack("st_1", st_1);
+    printIntStack("st_1", st_1);
 
     while(!st_1.empty())
         st_1.pop();
@@ -55,24 +80,12 @@ void containerAdaptorsQueues(void)
     
     for(int i = 0; i < q_0.size() / 2; i++)
         q_0.pop();
-    
-    auto print_int_queue = [](const std::string& q_name, std::queue<int> q) -> void
-    {
-        std::vector<int> temp_vec;
-        
-        while(!q.empty())
-        {
-            temp_vec.emplace_back(q.front());
-            q.pop();
-        }
 
-        printSequenceContainer(q_name, temp_vec);
-    };
-
-    print_int_queue("q_0", q_0);
+    printIntQueue("q_0", q_0);
 
     std::queue<int> q_1 = static_cast<std::queue<int>>(std::deque{1, 2, 3});    // Queues can also be initialized from deques.
-    print_int_queue("q_1", q_1);
+    
+    printIntQueue("q_1", q_1);
 }
 
 void containerAdaptorsHeaps(void)
@@ -114,22 +127,9 @@ void containerAdaptorsHeaps(void)
     //  15    10
     //  / \   /
     // 8  3  2
-   
-    auto print_int_heap = [](const std::string& h_name, std::priority_queue<int> h) -> void
-    {
-        std::vector<int> temp_vec;
-        
-        while(!h.empty())
-        {
-            temp_vec.emplace_back(h.top());
-            h.pop();
-        }
-
-        printSequenceContainer(h_name, temp_vec);
-    };
 
     printSequenceContainer("vector_before_h_0", tree_values_0);
-    print_int_heap("h_0", h_0);
+    printIntHeap("h_0", h_0);
 
     std::vector<int> h_1 = {10, 20, 5, 30, 15};
 
