@@ -415,6 +415,34 @@ void TestUnorderedContainers(void)
 {
     PrintTestHeader(MSG_TEST_UNORDERED_CONTAINERS);
 
+    // Unordered sets: same as common sets, but with faster access ( O(1) vs O(log(n)) ).
+    // Elements within are not ordered.
+    std::unordered_set<int> u_s_0 ={1, 2, 5};
+    u_s_0.insert(1);
+    u_s_0.insert(7);
+    u_s_0.insert(8);
+    u_s_0.insert(2);
+
+    auto print_set = [](const std::string& set_name, auto input_set) -> void
+    {
+        size_t input_set_size = input_set.size();
+        size_t idx = 0;
+
+        std::cout << set_name << " = { ";
+        
+        for(auto s : input_set)
+        {
+            std::cout << s;
+            
+            if(idx++ < (input_set_size - 1))
+                std::cout << ", ";
+        }
+
+        std::cout << " }" << std::endl;
+    };
+    
+    print_set("u_s_0", u_s_0);
+    
     // Unordered map: same as common maps, but with faster access ( O(1) vs O(log(n)) ). Standard library provides std::hash for
     // basic types like int, std::tring and so on. For other types (such as std::pair) there's no built-in hash
     // function, so a custom one has to be defined in such cases.
@@ -426,6 +454,26 @@ void TestUnorderedContainers(void)
         {2  ,   "Zwei"  },
     };
 
+    auto print_map = [](const std::string& map_name, auto input_map) -> void
+    {
+        size_t input_map_size = input_map.size();
+        size_t idx = 0;
+
+        std::cout << map_name << " = { ";
+        
+        for(auto it = input_map.begin(); it != input_map.end(); it++)
+        {
+            std::cout << "{" << it->first << ", " << it->second << "}";
+
+            if(idx++ < (input_map_size - 1))
+                std::cout << ", ";
+        }
+
+        std::cout << " }" << std::endl;
+    };
+
+    print_map("u_map_0", u_map_0);
+
     auto custom_hash = [](const std::pair<int,int>& p)
     {
         return std::hash<int>()(p.first) ^ (std::hash<int>()(p.second) << 1);
@@ -436,6 +484,57 @@ void TestUnorderedContainers(void)
     u_map_1.insert({{1, 2}, "A"});
     u_map_1.insert({{3, 4}, "B"});
     u_map_1.insert({{5, 6}, "C"});
+
+    // Unordered multiset: same as multiset, but faster access with unordered elements.
+    std::unordered_multiset<int> u_ms_0 = {2, 2, 6, 4, 3, 4, 1, 4, 7, 9};
+    print_set("u_ms_0", u_ms_0);
+
+    // Unordered_multimap: same as multimap, but faster access with unordered elements.
+    std::unordered_multimap<int, std::string> u_mm_0 =
+    {
+        {1, "Monday"    },
+        {2, "Tuesday"   },
+        {1, "Montag"    },
+        {3, "Wednesday" },
+        {3, "Mittwoch"  },
+        {2, "Dienstag"  },
+        {4, "Donnerstag"},
+        {5, "Freitag"   },
+        {6, "Samstag"   },
+        {7, "Sonntag"   },
+    };
+    
+    auto print_multimap = [](const std::string& multimap_name, const auto& input_multimap) -> void
+    {
+        using MapType   = std::decay_t<decltype(input_multimap)>;
+        using KeyType   = typename MapType::key_type;
+        using ValueType = typename MapType::mapped_type;
+
+        std::set<KeyType> multimap_keys;
+        for (auto it = input_multimap.begin(); it != input_multimap.end(); ++it)
+            multimap_keys.insert(it->first);
+
+        std::cout << multimap_name << " = " << std::endl << "{ " << std::endl;
+
+        std::vector<ValueType> key_values;
+
+        for (auto key : multimap_keys)
+        {
+            auto key_range = input_multimap.equal_range(key);
+            key_values.clear();
+
+            for (auto it = key_range.first; it != key_range.second; ++it)
+                key_values.emplace_back(it->second);
+
+            std::ostringstream oss;
+            oss << key; // requires operator<< for KeyType
+            printSequenceContainer(oss.str(), key_values);
+        }
+
+        std::cout << " }" << std::endl;
+    };
+
+    print_multimap("u_mm_0", u_mm_0);
 }
 
 int main()
