@@ -4,12 +4,7 @@
 #include "SequenceContainers.hpp"
 #include "ContainerAdaptors.hpp"
 #include "AssociativeContainers.hpp"
-
-#include <map>
-#include <set>
-#include <unordered_map>
-#include <unordered_set>
-#include <sstream>
+#include "UnorderedContainers.hpp"
 
 /**************************************/
 
@@ -64,7 +59,10 @@ void TestUnorderedContainers(void)
 {
     PrintTestHeader(MSG_TEST_UNORDERED_CONTAINERS);
 
-    
+    unorderedContainersSets();
+    unorderedContainersMaps();
+    unorderedContainersMultisets();
+    unorderedContainersMultimaps();
 }
 
 int main()
@@ -72,6 +70,7 @@ int main()
     TestSequenceContainers();
     TestContainerAdaptors();
     TestAssociativeContainers();
+    TestUnorderedContainers();
 
     return 0;
 }
