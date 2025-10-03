@@ -3,6 +3,7 @@
 #include <iostream>
 #include "SequenceContainers.hpp"
 #include "ContainerAdaptors.hpp"
+#include "AssociativeContainers.hpp"
 
 #include <map>
 #include <set>
@@ -49,10 +50,28 @@ void TestContainerAdaptors(void)
     containerAdaptorsHeaps();
 }
 
+void TestAssociativeContainers(void)
+{
+    PrintTestHeader(MSG_TEST_ASSOCIATIVE_CONTAINERS);
+
+    associativeContainersMaps();
+    associativeContainersSets();
+    associativeContainersMultimaps();
+    associativeContainersMultisets();
+}
+
+void TestUnorderedContainers(void)
+{
+    PrintTestHeader(MSG_TEST_UNORDERED_CONTAINERS);
+
+    
+}
+
 int main()
 {
     TestSequenceContainers();
     TestContainerAdaptors();
+    TestAssociativeContainers();
 
     return 0;
 }
