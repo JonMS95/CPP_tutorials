@@ -11,6 +11,12 @@
 
 /**************************************/
 
+/**** Private function prototypes *****/
+
+void printIntContainerAdaptor(const std::string& var_name, auto var, std::function<int(decltype(var)&)> var_fn);
+
+/**************************************/
+
 /******** Function definitions ********/
 
 // The function below may have been a template, and try to adapt to more types, but it's simply not worth
