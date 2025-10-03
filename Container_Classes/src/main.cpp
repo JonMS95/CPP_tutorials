@@ -18,14 +18,24 @@
 
 /**************************************/
 
+/**** Private function prototypes *****/
+
+static void PrintTestHeader(const char* header);
+static void TestSequenceContainers(void);
+static void TestContainerAdaptors(void);
+static void TestAssociativeContainers(void);
+static void TestUnorderedContainers(void);
+
+/**************************************/
+
 /******** Function definitions ********/
 
-void PrintTestHeader(const char* header)
+static void PrintTestHeader(const char* header)
 {
     std::cout << std::endl << MSG_TEST_HEADER << std::endl << header << std::endl << MSG_TEST_HEADER << std::endl;
 }
 
-void TestSequenceContainers(void)
+static void TestSequenceContainers(void)
 {
     PrintTestHeader(MSG_TEST_SEQUENCE_CONTAINERS);
 
@@ -36,7 +46,7 @@ void TestSequenceContainers(void)
     sequenceContainersSinglyLinkedLists();
 }
 
-void TestContainerAdaptors(void)
+static void TestContainerAdaptors(void)
 {
     PrintTestHeader(MSG_TEST_CONTAINER_ADAPTORS);
 
@@ -45,7 +55,7 @@ void TestContainerAdaptors(void)
     containerAdaptorsHeaps();
 }
 
-void TestAssociativeContainers(void)
+static void TestAssociativeContainers(void)
 {
     PrintTestHeader(MSG_TEST_ASSOCIATIVE_CONTAINERS);
 
@@ -55,7 +65,7 @@ void TestAssociativeContainers(void)
     associativeContainersMultisets();
 }
 
-void TestUnorderedContainers(void)
+static void TestUnorderedContainers(void)
 {
     PrintTestHeader(MSG_TEST_UNORDERED_CONTAINERS);
 

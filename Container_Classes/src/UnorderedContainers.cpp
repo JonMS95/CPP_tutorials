@@ -8,17 +8,17 @@
 
 /****** Private inline functions ******/
 
-inline void printUnorderedMap(const std::string& unordered_map_name, auto input_unordered_map)
+static inline void printUnorderedMap(const std::string& unordered_map_name, auto input_unordered_map)
 {
     printMap(unordered_map_name, input_unordered_map);
 }
 
-inline void printUnorderedSet(const std::string unordered_set_name, auto input_unordered_set)
+static inline void printUnorderedSet(const std::string unordered_set_name, auto input_unordered_set)
 {
     printSet(unordered_set_name, input_unordered_set);
 }
 
-inline void printUnorderedMultimap(const std::string unordered_multimap_name, auto input_unordered_multimap)
+static inline void printUnorderedMultimap(const std::string unordered_multimap_name, auto input_unordered_multimap)
 {
     printMultimap(unordered_multimap_name, input_unordered_multimap);
 }

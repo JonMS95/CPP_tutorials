@@ -13,7 +13,7 @@
 
 /**** Private function prototypes *****/
 
-void printIntContainerAdaptor(const std::string& var_name, auto var, std::function<int(decltype(var)&)> var_fn);
+static void printIntContainerAdaptor(const std::string& var_name, auto var, std::function<int(decltype(var)&)> var_fn);
 
 /**************************************/
 
@@ -25,7 +25,7 @@ void printIntContainerAdaptor(const std::string& var_name, auto var, std::functi
 // ·name:   name of the wrapper.
 // ·atype:  input argument types.
 // ·rtype:  return type.
-void printIntContainerAdaptor(const std::string& var_name, auto var, std::function<int(decltype(var)&)> var_fn)
+static void printIntContainerAdaptor(const std::string& var_name, auto var, std::function<int(decltype(var)&)> var_fn)
 {
     std::vector<int> temp_vec;
     
