@@ -13,6 +13,7 @@
 #include "ConstructorInitializerList.hpp"
 #include "OperatorOverloading.hpp"
 #include "CopyConstructors.hpp"
+#include "MoveConstructors.hpp"
 
 /**************************************/
 
@@ -28,17 +29,18 @@
 #define MSG_TEST_CONSTRUCTOR_INIT_LIST  "Testing ConstructorInitializerList."
 #define MSG_TEST_OPERATOR_OVERLOADING   "Testing OperatorOverloading."
 #define MSG_TEST_COPY_CONSTRUCTORS      "Testing CopyConstructors."
+#define MSG_TEST_MOVE_CONSTRUCTORS      "Testing MoveConstructors."
 
 /**************************************/
 
 /******** Function definitions ********/
 
-void PrintTestHeader(const char* header)
+static void PrintTestHeader(const char* header)
 {
     std::cout << std::endl << MSG_TEST_HEADER << std::endl << header << std::endl << MSG_TEST_HEADER << std::endl;
 }
 
-void TestStaticInClasses(void)
+static void TestStaticInClasses(void)
 {
     PrintTestHeader(MSG_TEST_STATIC_IN_CLASSES);
 
@@ -73,7 +75,7 @@ void TestStaticInClasses(void)
     StaticInClasses::Greeting();
 }
 
-void TestConstructorDestructor(void)
+static void TestConstructorDestructor(void)
 {
     PrintTestHeader(MSG_TEST_CONSTRUCTOR_DESTRUCTOR);
 
@@ -84,7 +86,7 @@ void TestConstructorDestructor(void)
     cd2.PrintCoordinates();
 }
 
-void TestClassInheritance()
+static void TestClassInheritance(void)
 {
     PrintTestHeader(MSG_TEST_CLASS_INHERITANCE);
 
@@ -96,7 +98,7 @@ void TestClassInheritance()
     ci.Greeting();
 }
 
-void TestVirtualFunctions()
+static void TestVirtualFunctions(void)
 {
     PrintTestHeader(MSG_TEST_VIRTUAL_FUNCTIONS);
 
@@ -126,7 +128,7 @@ void TestVirtualFunctions()
     pvf2->SayBye();
 }
 
-void TestInterfaces()
+static void TestInterfaces(void)
 {
     PrintTestHeader(MSG_TEST_INTERFACES);
 
@@ -142,7 +144,7 @@ void TestInterfaces()
     std::cout << "Calling it from PrintInterfaceGreeting function: " << PrintInterfaceGreeting(&if2) << std::endl;
 }
 
-void TestVisibility()
+static void TestVisibility(void)
 {
     PrintTestHeader(MSG_TEST_VISIBILITY);
 
@@ -164,7 +166,7 @@ void TestVisibility()
     FriendClass fc("Joey");
 }
 
-void TestConstructorInitializerList()
+static void TestConstructorInitializerList(void)
 {
     PrintTestHeader(MSG_TEST_CONSTRUCTOR_INIT_LIST);
 
@@ -175,7 +177,7 @@ void TestConstructorInitializerList()
     cil2.PrintName();
 }
 
-void TestOperatorOverloading()
+static void TestOperatorOverloading(void)
 {
     PrintTestHeader(MSG_TEST_OPERATOR_OVERLOADING);
 
@@ -200,7 +202,7 @@ void TestOperatorOverloading()
     ShowCoordinatesAsVector(oo6);
 }
 
-void TestCopyConstructors()
+static void TestCopyConstructors(void)
 {
     PrintTestHeader(MSG_TEST_COPY_CONSTRUCTORS);
 
@@ -230,6 +232,24 @@ void TestCopyConstructors()
     SmartPrintString(cc2);
 }
 
+static void TestMoveConstructors(void)
+{
+    PrintTestHeader(MSG_TEST_MOVE_CONSTRUCTORS);
+
+    DummyCopyConstructorClass dccc_0("Ethan", 33);
+
+    // Copy constructor call (the dccc_1 is now being called and it's not been initialized beforehand).
+    DummyCopyConstructorClass dccc_1 = dccc_0;
+
+    // Calling assignment operator now (as the object to be assigned to already exists).
+    DummyCopyConstructorClass dccc_2("Miranda", 29);
+    dccc_2 = dccc_1;
+
+    // Move constructor (dcc)
+    DummyMoveConstructorClass dmcc_0("Jason", 20);
+    DummyMoveConstructorClass dmcc_1(std::move(dmcc_0));
+}
+
 int main()
 {
     TestStaticInClasses();
@@ -241,6 +261,7 @@ int main()
     TestConstructorInitializerList();
     TestOperatorOverloading();
     TestCopyConstructors();
+    TestMoveConstructors();
 
     return 0;
 }

@@ -42,6 +42,8 @@
 // classes from creating v-tables. "final" keyword can also be used for classes, meaning that the
 // final class can no longer be inherited.
 
+// When it comes to methods, "final".methods do inherit the method in question but cannot override it.
+
 /********** Class prototypes **********/
 
 class ClassInheritanceBase
