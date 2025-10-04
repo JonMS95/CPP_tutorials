@@ -1,5 +1,5 @@
-#ifndef CLASS_INHERITANCE_HPP
-#define CLASS_INHERITANCE_HPP
+#ifndef MOVE_CONSTRUCTORS_HPP
+#define MOVE_CONSTRUCTORS_HPP
 
 /********* Include statements *********/
 
@@ -13,22 +13,42 @@
 
 /********** Class prototypes **********/
 
-class DummyCopyConstructorClass
+class DummyMoveClassBase
 {
 private:
     const std::string name;
     std::unique_ptr<int> age_ptr;
-public:
-    // No default nor copy contructor.
-    DummyCopyConstructorClass(void) = delete;
-    DummyCopyConstructorClass(const DummyCopyConstructorClass&& other) = delete;
+
+protected:
+    std::string BuildConstructorDestructorMessage(const std::string& action, const std::string& class_name) const;
+    virtual void OutputConstructorDestructorMessage(const std::string& action) const = 0;
+
+    DummyMoveClassBase(void) = delete;
 
     std::string getName(void) const;
     int getAge(void) const;
+    void setAge(const int input_age);
 
+    DummyMoveClassBase(const std::string input_name, const int age);
+    DummyMoveClassBase(const DummyMoveClassBase& other);
+    DummyMoveClassBase(DummyMoveClassBase&& other) = default;
+    
+    virtual ~DummyMoveClassBase(void);
+};
+
+class DummyCopyConstructorClass : public DummyMoveClassBase
+{
+private:
+    void OutputConstructorDestructorMessage(const std::string& action) const override;
+
+public:
     DummyCopyConstructorClass(const std::string input_name, const int age);
     DummyCopyConstructorClass(const DummyCopyConstructorClass& other);
-    virtual ~DummyCopyConstructorClass(void);
+    DummyCopyConstructorClass& operator=(const DummyCopyConstructorClass& other);
+
+    DummyCopyConstructorClass(DummyCopyConstructorClass&& other) = delete;
+    
+    ~DummyCopyConstructorClass(void) override;
 };
 
 /**************************************/

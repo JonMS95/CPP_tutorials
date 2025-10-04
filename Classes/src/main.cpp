@@ -235,6 +235,15 @@ static void TestCopyConstructors(void)
 static void TestMoveConstructors(void)
 {
     PrintTestHeader(MSG_TEST_MOVE_CONSTRUCTORS);
+
+    DummyCopyConstructorClass dccc_0("Ethan", 33);
+
+    // Copy constructor call (the dccc_1 is now being called and it's not been initialized beforehand).
+    DummyCopyConstructorClass dccc_1 = dccc_0;
+
+    // Calling assignment operator now (as the object to be assigned to already exists).
+    DummyCopyConstructorClass dccc_2("Miranda", 29);
+    dccc_2 = dccc_1;
 }
 
 int main()
@@ -248,6 +257,7 @@ int main()
     TestConstructorInitializerList();
     TestOperatorOverloading();
     TestCopyConstructors();
+    TestMoveConstructors();
 
     return 0;
 }

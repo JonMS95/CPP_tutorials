@@ -9,31 +9,67 @@
 
 /********* Method definitions *********/
 
-std::string DummyCopyConstructorClass::getName(void) const
+std::string DummyMoveClassBase::BuildConstructorDestructorMessage(const std::string& action, const std::string& class_name = "DummyMoveClassBase") const
+{
+    return (action + " " + class_name + " instance with name: " + this->name + " and age: " + std::to_string(*(this->age_ptr)));
+}
+
+std::string DummyMoveClassBase::getName(void) const
 {
     return this->name;
 }
 
-int DummyCopyConstructorClass::getAge(void) const
+int DummyMoveClassBase::getAge(void) const
 {
-    return *age_ptr;
+    return *(this->age_ptr);
 }
 
-DummyCopyConstructorClass::DummyCopyConstructorClass(const std::string input_name, const int input_age):
-name(input_name), age_ptr(std::make_unique<int>(input_age))
+void DummyMoveClassBase::setAge(const int input_age)
 {
-    std::cout << "Created DummyCopyConstructorClass instance with name: " << this->name << " and age: " << *(this->age_ptr.get()) << std::endl;
+    *(this->age_ptr) = input_age;
+}
+
+DummyMoveClassBase::DummyMoveClassBase(const std::string input_name, const int input_age):
+name(input_name), age_ptr(std::make_unique<int>(input_age))
+{}
+
+DummyMoveClassBase::~DummyMoveClassBase(void)
+{}
+
+DummyMoveClassBase::DummyMoveClassBase(const DummyMoveClassBase& other):
+name(other.getName()), age_ptr(std::make_unique<int>(other.getAge()))
+{}
+
+void DummyCopyConstructorClass::OutputConstructorDestructorMessage(const std::string& action) const
+{
+    std::cout << DummyMoveClassBase::BuildConstructorDestructorMessage(action, "DummyCopyConstructorClass") << std::endl;
+}
+
+DummyCopyConstructorClass::DummyCopyConstructorClass(const std::string input_name, const int age):
+DummyMoveClassBase(input_name, age)
+{
+    this->OutputConstructorDestructorMessage("Created");
 }
 
 DummyCopyConstructorClass::DummyCopyConstructorClass(const DummyCopyConstructorClass& other):
-name(other.getName()), age_ptr(std::make_unique<int>(other.getAge()))
+DummyMoveClassBase(other)
 {
-    std::cout << "Copied DummyCopyConstructorClass instance with name: " << this->name << " and age: " << *(this->age_ptr.get()) << std::endl;
+    this->OutputConstructorDestructorMessage("Copied");
 }
 
+DummyCopyConstructorClass& DummyCopyConstructorClass::operator=(const DummyCopyConstructorClass& other)
+{
+    if(this == &other)
+        return *this;
+    
+    this->setAge(other.getAge());
+
+    return *this;
+}
+    
 DummyCopyConstructorClass::~DummyCopyConstructorClass(void)
 {
-    std::cout << "Destroyed DummyCopyConstructorClass instance with name: " << this->name << " and age: " << *(this->age_ptr.get()) << std::endl;
+    this->OutputConstructorDestructorMessage("Destroyed");
 }
 
 /**************************************/
