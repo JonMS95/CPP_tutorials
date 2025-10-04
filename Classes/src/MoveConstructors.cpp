@@ -11,7 +11,10 @@
 
 std::string DummyMoveClassBase::BuildConstructorDestructorMessage(const std::string& action, const std::string& class_name = "DummyMoveClassBase") const
 {
-    return (action + " " + class_name + " instance with name: " + this->name + " and age: " + std::to_string(*(this->age_ptr)));
+    std::string name_text   = (this->name.size() ? this->name : "(None)");
+    std::string age_text    = (this->age_ptr.get() ? std::to_string(*(this->age_ptr)) : "(None)");
+
+    return (action + " " + class_name + " instance with name: " + name_text + " and age: " + age_text);
 }
 
 std::string DummyMoveClassBase::getName(void) const
@@ -38,6 +41,10 @@ DummyMoveClassBase::~DummyMoveClassBase(void)
 
 DummyMoveClassBase::DummyMoveClassBase(const DummyMoveClassBase& other):
 name(other.getName()), age_ptr(std::make_unique<int>(other.getAge()))
+{}
+
+DummyMoveClassBase::DummyMoveClassBase(DummyMoveClassBase&& other) noexcept :
+age_ptr(std::move(other.age_ptr)), name(std::move(other.name))
 {}
 
 void DummyCopyConstructorClass::OutputConstructorDestructorMessage(const std::string& action) const
@@ -68,6 +75,28 @@ DummyCopyConstructorClass& DummyCopyConstructorClass::operator=(const DummyCopyC
 }
     
 DummyCopyConstructorClass::~DummyCopyConstructorClass(void)
+{
+    this->OutputConstructorDestructorMessage("Destroyed");
+}
+
+void DummyMoveConstructorClass::OutputConstructorDestructorMessage(const std::string& action) const
+{
+    std::cout << DummyMoveClassBase::BuildConstructorDestructorMessage(action, "DummyCopyConstructorClass") << std::endl;
+}
+
+DummyMoveConstructorClass::DummyMoveConstructorClass(const std::string input_name, const int age):
+DummyMoveClassBase(input_name, age)
+{
+    this->OutputConstructorDestructorMessage("Created");
+}
+
+DummyMoveConstructorClass::DummyMoveConstructorClass(DummyMoveConstructorClass&& other) noexcept:
+DummyMoveClassBase(std::move(other))
+{
+    this->OutputConstructorDestructorMessage("Moved");
+}
+    
+DummyMoveConstructorClass::~DummyMoveConstructorClass(void)
 {
     this->OutputConstructorDestructorMessage("Destroyed");
 }

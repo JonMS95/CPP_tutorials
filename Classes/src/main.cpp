@@ -244,6 +244,10 @@ static void TestMoveConstructors(void)
     // Calling assignment operator now (as the object to be assigned to already exists).
     DummyCopyConstructorClass dccc_2("Miranda", 29);
     dccc_2 = dccc_1;
+
+    // Move constructor (dcc)
+    DummyMoveConstructorClass dmcc_0("Jason", 20);
+    DummyMoveConstructorClass dmcc_1(std::move(dmcc_0));
 }
 
 int main()
