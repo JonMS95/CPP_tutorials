@@ -13,6 +13,7 @@
 #include "ConstructorInitializerList.hpp"
 #include "OperatorOverloading.hpp"
 #include "CopyConstructors.hpp"
+#include "MoveConstructors.hpp"
 
 /**************************************/
 

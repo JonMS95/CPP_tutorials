@@ -19,10 +19,15 @@ private:
     const std::string name;
     std::unique_ptr<int> age_ptr;
 public:
+    // No default nor copy contructor.
     DummyCopyConstructorClass(void) = delete;
+    DummyCopyConstructorClass(const DummyCopyConstructorClass&& other) = delete;
+
+    std::string getName(void) const;
+    int getAge(void) const;
+
     DummyCopyConstructorClass(const std::string input_name, const int age);
     DummyCopyConstructorClass(const DummyCopyConstructorClass& other);
-    DummyCopyConstructorClass(const DummyCopyConstructorClass&& other) = delete;
     virtual ~DummyCopyConstructorClass(void);
 };
 
