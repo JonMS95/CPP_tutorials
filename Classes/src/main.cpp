@@ -14,6 +14,7 @@
 #include "OperatorOverloading.hpp"
 #include "CopyConstructors.hpp"
 #include "MoveConstructors.hpp"
+#include "Singletons.hpp"
 
 /**************************************/
 
@@ -30,6 +31,7 @@
 #define MSG_TEST_OPERATOR_OVERLOADING   "Testing OperatorOverloading."
 #define MSG_TEST_COPY_CONSTRUCTORS      "Testing CopyConstructors."
 #define MSG_TEST_MOVE_CONSTRUCTORS      "Testing MoveConstructors."
+#define MSG_TEST_SINGLETONS             "Testing MoveConstructors."
 
 /**************************************/
 
@@ -250,6 +252,17 @@ static void TestMoveConstructors(void)
     DummyMoveConstructorClass dmcc_1(std::move(dmcc_0));
 }
 
+static void TestSingletons(void)
+{
+    PrintTestHeader(MSG_TEST_SINGLETONS);
+
+    SingletonClass& singleton_test = SingletonClass::instance(443, "HTTPS");
+
+    std::cout << "singleton_test -> port: " <<
+    singleton_test.getInstancePort() << ", name: " <<
+    singleton_test.getInstanceName() << std::endl;
+}
+
 int main()
 {
     TestStaticInClasses();
@@ -262,6 +275,7 @@ int main()
     TestOperatorOverloading();
     TestCopyConstructors();
     TestMoveConstructors();
+    TestSingletons();
 
     return 0;
 }
