@@ -6,7 +6,7 @@
 
 /**************************************/
 
-/********* Include statements *********/
+/********* Define statements **********/
 
 #define DEFAULT_NAME        "DEFAULT"
 
