@@ -6,11 +6,6 @@
 
 /**************************************/
 
-/********* Include statements *********/
-
-
-/**************************************/
-
 /********* Method definitions *********/
 
 int ImplicitOneParameter::getUserID(void)
