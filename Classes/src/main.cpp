@@ -15,6 +15,7 @@
 #include "CopyConstructors.hpp"
 #include "MoveConstructors.hpp"
 #include "Singletons.hpp"
+#include "ExplicitConstructors.hpp"
 
 /**************************************/
 
@@ -31,7 +32,8 @@
 #define MSG_TEST_OPERATOR_OVERLOADING   "Testing OperatorOverloading."
 #define MSG_TEST_COPY_CONSTRUCTORS      "Testing CopyConstructors."
 #define MSG_TEST_MOVE_CONSTRUCTORS      "Testing MoveConstructors."
-#define MSG_TEST_SINGLETONS             "Testing MoveConstructors."
+#define MSG_TEST_SINGLETONS             "Testing Singletons."
+#define MSG_TEST_EXPLICIT_CONSTRUCTORS  "Testing ExplicitConstructors."
 
 /**************************************/
 
@@ -263,6 +265,29 @@ static void TestSingletons(void)
     singleton_test.getInstanceName() << std::endl;
 }
 
+static void TestExplicitConstructors(void)
+{
+    PrintTestHeader(MSG_TEST_EXPLICIT_CONSTRUCTORS);
+    
+    ImplicitOneParameter eop_0(0);
+    ImplicitOneParameter eop_1 = 1;
+
+    ImplicitTwoParameters etp_0(2, "Joey");
+    ImplicitTwoParameters etp_1 = 3;
+
+    ImplicitTwoParametersNoDefault(4, "Ashton");
+
+    // If the line below was executed, it would throw some compiler error like:
+    // no known conversion for argument 1 from ‘int’ to ‘const ExplicitTwoParametersNoDefault&’
+    // ExplicitTwoParametersNoDefault(5);
+
+    ExplicitClass ec_0("Melissa");
+
+    // Same as before, there is no conversion from std::string to ExplicitClass, thus, the line
+    // below will not compile whatsoever.
+    // ExplicitClass ec_1 = "Jane";
+}
+
 int main()
 {
     TestStaticInClasses();
@@ -276,6 +301,7 @@ int main()
     TestCopyConstructors();
     TestMoveConstructors();
     TestSingletons();
+    TestExplicitConstructors();
 
     return 0;
 }
