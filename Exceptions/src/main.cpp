@@ -29,6 +29,7 @@ static void TestBasicExceptions(void)
     throwingBuiltInTypes();
     throwStandardException();
     try2divide();
+    exceptionHierarchy();
 }
 
 static void TestExceptionTypes(void)
