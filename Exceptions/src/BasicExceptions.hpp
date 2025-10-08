@@ -13,6 +13,7 @@
 
 void throwingBuiltInTypes(void);
 void throwStandardException(void);
+void try2divide(void);
 
 /**************************************/
 
