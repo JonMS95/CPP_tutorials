@@ -1,7 +1,7 @@
 #ifndef BASIC_EXCEPTIONS_HPP
 #define BASIC_EXCEPTIONS_HPP
 
-/******** Function definitions ********/
+/******** Function prototypes *********/
 
 void throwingBuiltInTypes(void);
 void throwStandardException(void);
