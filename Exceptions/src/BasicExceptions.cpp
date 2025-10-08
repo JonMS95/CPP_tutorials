@@ -1,5 +1,8 @@
 /********* Include statements *********/
 
+#include <iostream>
+#include <stdexcept>
+#include <vector>
 #include "BasicExceptions.hpp"
 
 /**************************************/
@@ -18,10 +21,16 @@
 /***** Private function prototypes ****/
 
 static int divideIntegers(const int a, const int b);
+static void deepStep(void);
+static void shallowStep(void);
 
 /**************************************/
 
 /******** Function definitions *********/
+
+// Exception can throw any type, however the most common practice is to use types defined in std::exception
+// since they can be taught generically and integrate with the standard error handling system. In the example
+// shown below, it throws an integer.
 
 void throwingBuiltInTypes(void)
 {
@@ -75,6 +84,55 @@ void try2divide(void)
         std::cerr << e.what() << std::endl;
     }
     
+}
+
+// What happens under the hood?
+// 1 - The code tries to run normally.
+// 2 - If no error happens, then the program skips every catch blocks.
+// 3 - If throw is executed, then:
+//     ·The function stops executing immediately.
+//     ·Control jumps up the call stack looking for a matching catch.
+//     ·If not found, then the program terminates with std::terminate.
+
+static void deepStep(void)
+{
+    std::cout << "Inside of firstStep" << std::endl;
+    throw std::runtime_error("Error within firstStep");
+}
+
+static void shallowStep(void)
+{
+    std::cout << "Inside of secondStep" << std::endl;
+
+    deepStep();
+
+    std::cout << "This is never going to be printed" << std::endl;
+}
+
+// When catching an exception, it's strongly recommended to do it in a hierarchic way (from the most specific to the least).
+// This way, no catch block is ignored. Usually the couple shown below are the most common catch blocks after a try:
+// catch(const std::exception& e)   // Capture a generic exception (std::exception is a base class).
+// catch(...)                       // Capture any exception, either known or not.
+// These two are usually preceeded by even more generic catch statements.
+
+void exceptionHierarchy(void)
+{
+    try
+    {
+        shallowStep();
+    }
+    catch(const std::runtime_error& re)
+    {
+        std::cerr << "Runtime error caught!" << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Generic exception caught!" << std::endl;
+    }
+    catch(...)
+    {
+        std::cerr << "Unkown exception caught!" << std::endl;
+    }
 }
 
 /**************************************/
