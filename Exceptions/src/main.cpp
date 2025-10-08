@@ -12,6 +12,7 @@
 #define MSG_TEST_EXCEPTION_TYPES        "Testing exception types."
 #define MSG_TEST_FILE_IO_EXCEPTIONS     "Testing file I/O exceptions."
 #define MSG_TEST_CUSTOM_EXCEPTIONS      "Testing custom exceptions."
+#define MSG_TEST_NOEXCEPT_KEYWORD       "Testing noexcept keyword."
 
 /**************************************/
 
@@ -47,12 +48,18 @@ static void TestCustomExceptions(void)
     PrintTestHeader(MSG_TEST_CUSTOM_EXCEPTIONS);
 }
 
+static void TestNoexceptkeyword(void)
+{
+    PrintTestHeader(MSG_TEST_NOEXCEPT_KEYWORD);
+}
+
 int main()
 {
     TestBasicExceptions();
     TestExceptionTypes();
     TestFileIOExceptions();
     TestCustomExceptions();
+    TestNoexceptkeyword();
 
     return 0;
 }
