@@ -135,4 +135,13 @@ void exceptionHierarchy(void)
     }
 }
 
+// Finally, it's worth pointing out that if no catch block ever gets a previously thrown exception,
+// then the program in question will simply terminate by using std::terminate. Note that exceptions
+// cannot replace memory safety, but they report any potential conflict instead.
+//
+// For instance, trying
+// to dereference a null pointer may cause a segmentation fault, which may also be reported as an
+// std::runtime_exception, but the existence of an exception will not prevent the forbidden memory
+// access from ever happening.
+
 /**************************************/
