@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "BasicExceptions.hpp"
+#include "ExceptionTypes.hpp"
 
 /**************************************/
 
@@ -35,6 +36,11 @@ static void TestBasicExceptions(void)
 static void TestExceptionTypes(void)
 {
     PrintTestHeader(MSG_TEST_EXCEPTION_TYPES);
+
+    causeGenericRuntimeException();
+    causeRangeErrorException();
+    causeOverflowException();
+    causeUnderflowException();
 }
 
 static void TestFileIOExceptions(void)
