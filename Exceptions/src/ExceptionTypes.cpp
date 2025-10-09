@@ -89,7 +89,7 @@ void causeRangeErrorException(void)
 {
     const std::vector<int> test_vec = {1, 3, 5, 7};
 
-    SIMPLE_TRY_CATCH_BLOCK(getElementFromVector(test_vec, test_vec.size()), std::range_error);
+    SIMPLE_TRY_CATCH_BLOCK(getElementFromVector(test_vec, test_vec.size()), std::out_of_range);
 }
 
 static int plusOne(const int input)
