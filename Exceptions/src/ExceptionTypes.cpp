@@ -5,7 +5,9 @@
 #include <iostream>
 #include <limits>
 #include <string>
-#include "BasicExceptions.hpp"
+#include <cmath>
+#include <cctype>
+#include "ExceptionTypes.hpp"
 
 /**************************************/
 
@@ -33,20 +35,27 @@ do                                                              \
 }                                                               \
 while(0);
 
+#define MAX_INPUT_STR_LEN   10
+
 /**************************************/
 
 /***** Private function prototypes ****/
 
+static void throwLogicErrorException(void);
+static double safeDivision(const double a, const double b);
 template <typename T>
 static T getElementFromVector(const std::vector<T>& vec, const int idx = 0)
 {
     if(idx >= vec.size())
-        throw std::range_error(("Provided index was out of bounds (" + std::to_string(idx) + ")"));
+        throw std::out_of_range(("Out of range exception: Provided index was out of bounds (" + std::to_string(idx) + ")"));
     
     return vec[idx];
 }
+static double safeSquareRoot(const double x);
+static void toUppercaseString(std::string& s);
 
 static void throwRuntimeErrorException(void);
+static bool isAccessGranted(const int age);
 static int plusOne(const int input);
 static double safeMultiply(const double x, const double y);
 
@@ -75,9 +84,72 @@ static double safeMultiply(const double x, const double y);
 
 /******** Function definitions *********/
 
+/******* Logic error exceptions ********/
+
+static void throwLogicErrorException(void)
+{
+    throw std::logic_error("Generic logic error exception");
+}
+
+void causeGenericLogicErrorException(void)
+{
+    SIMPLE_TRY_CATCH_BLOCK(throwLogicErrorException(), std::logic_error);
+}
+
+static double safeDivision(const double a, const double b)
+{
+    if(b == 0.0)
+        throw std::invalid_argument("Invalid argument: Division by zero is not allowed");
+
+    return (a / b);
+}
+
+void causeInvalidArgumentException(void)
+{
+    SIMPLE_TRY_CATCH_BLOCK(safeDivision(1, 0), std::invalid_argument);
+}
+
+void causeOutOfRangeException(void)
+{
+    const std::vector<int> test_vec = {1, 3, 5, 7};
+
+    SIMPLE_TRY_CATCH_BLOCK(getElementFromVector(test_vec, test_vec.size()), std::out_of_range);
+}
+
+static double safeSquareRoot(const double x)
+{
+    if(x < 0)
+        throw std::domain_error("Domain error: Square root of negative number is not allowed");
+
+    return std::sqrt(x);
+}
+
+void causeDomainErrorException(void)
+{
+    SIMPLE_TRY_CATCH_BLOCK(safeSquareRoot(-4.5), std::domain_error);
+}
+
+static void toUppercaseString(std::string& s)
+{
+    if(s.size() >= MAX_INPUT_STR_LEN)
+        throw std::length_error(("Length error: string size (" + std::to_string(s.size()) + ") >= " + std::to_string(MAX_INPUT_STR_LEN)));
+
+    for(char& c : s)
+        c = std::toupper(c);
+}
+
+void causeLengthErrorException(void)
+{
+    std::string test_str = "Halellujah!";
+
+    SIMPLE_TRY_CATCH_BLOCK(toUppercaseString(test_str), std::length_error);
+}
+
+/****** Runtime error exceptions *******/
+
 static void throwRuntimeErrorException(void)
 {
-    throw std::runtime_error("Generic runtime exception");
+    throw std::runtime_error("Generic runtime error exception");
 }
 
 void causeGenericRuntimeException(void)
@@ -85,17 +157,24 @@ void causeGenericRuntimeException(void)
     SIMPLE_TRY_CATCH_BLOCK(throwRuntimeErrorException(), std::runtime_error);
 }
 
-void causeRangeErrorException(void)
+static bool isAccessGranted(const int age)
 {
-    const std::vector<int> test_vec = {1, 3, 5, 7};
+    if(age < 0)
+        throw std::range_error("Range error: age cannot be negative");
 
-    SIMPLE_TRY_CATCH_BLOCK(getElementFromVector(test_vec, test_vec.size()), std::out_of_range);
+    return (age >= 18);
+}
+
+void causeRangeErrorException()
+{
+    SIMPLE_TRY_CATCH_BLOCK(isAccessGranted(-1), std::range_error);
 }
 
 static int plusOne(const int input)
 {
     if(input == std::numeric_limits<int>::max())
-        throw std::overflow_error(("Cannot increment " + std::to_string(input) + " without causing an overflow"));
+        throw std::overflow_error(("Overflow error: cannot increment " + std::to_string(input) + " without causing an overflow"));
+
     return (input + 1);
 }
 
@@ -112,7 +191,7 @@ static double safeMultiply(const double x, const double y)
     
     // if (result != 0 && std::abs(result) < std::numeric_limits<double>::min())
     if(x < 0.001 && y < 0.001)
-        throw std::underflow_error("Underflow detected: result too small");
+        throw std::underflow_error("Underflow error: result too small");
     
     return result;
 }

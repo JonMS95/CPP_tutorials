@@ -37,6 +37,12 @@ static void TestExceptionTypes(void)
 {
     PrintTestHeader(MSG_TEST_EXCEPTION_TYPES);
 
+    causeGenericLogicErrorException();
+    causeInvalidArgumentException();
+    causeOutOfRangeException();
+    causeDomainErrorException();
+    causeLengthErrorException();
+
     causeGenericRuntimeException();
     causeRangeErrorException();
     causeOverflowException();
