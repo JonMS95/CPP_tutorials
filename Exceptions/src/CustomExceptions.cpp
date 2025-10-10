@@ -51,6 +51,8 @@
 
 #define DEFAULT_PATH_NAME   "non_existing_path.txt"
 
+#define MIN_PUB_AGE 18
+
 /**************************************/
 
 /***** Extended class definitions *****/
@@ -87,7 +89,7 @@ private:
 
 public:
     InvalidAgeException(const int age):
-        std::out_of_range("OOR: (invalid age)"), message("Invalid age: " + std::to_string(age)) {}
+        std::out_of_range(""), message("Invalid age: " + std::to_string(age)) {}
 
     const char* what() const noexcept override
     {
@@ -95,12 +97,18 @@ public:
     }
 };
 
+// Note that in the example shown above, bass class' constructor must be called, since base class
+// has no default constructor in this case. Also take into account that there's no point in providing
+// an input parameter to the base class constructor as .what() method is overriden, leading it to
+// never being outputted.
+
 /**************************************/
 
 /***** Private function prototypes ****/
 
 static void throwCustomException(void);
 static void readFile(const std::string& file_path);
+static bool canEnterPub(const int age);
 
 /**************************************/
 
@@ -126,6 +134,14 @@ static void readFile(const std::string& file_path)
         std::cout << line << std::endl;
 }
 
+static bool canEnterPub(const int age)
+{
+    if(age < 0)
+        throw InvalidAgeException(age);
+    
+    return (age > MIN_PUB_AGE);
+}
+
 void causeCustomException(void)
 {
     SIMPLE_TRY_CATCH_BLOCK(throwCustomException(), MyException);
@@ -134,6 +150,11 @@ void causeCustomException(void)
 void causeFileNotFoundException(void)
 {
     SIMPLE_TRY_CATCH_BLOCK(readFile(DEFAULT_PATH_NAME), FileNotFoundException);
+}
+
+void causeInvalidAgeException(void)
+{
+    SIMPLE_TRY_CATCH_BLOCK(canEnterPub(-1), InvalidAgeException);
 }
 
 /**************************************/
