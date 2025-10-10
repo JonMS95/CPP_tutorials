@@ -65,6 +65,7 @@ static void TestCustomExceptions(void)
 
     causeCustomException();
     causeFileNotFoundException();
+    causeInvalidAgeException();
 }
 
 static void TestNoexceptkeyword(void)

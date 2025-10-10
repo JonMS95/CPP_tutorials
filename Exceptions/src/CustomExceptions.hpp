@@ -5,6 +5,7 @@
 
 void causeCustomException(void);
 void causeFileNotFoundException(void);
+void causeInvalidAgeException(void);
 
 /**************************************/
 
