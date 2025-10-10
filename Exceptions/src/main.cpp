@@ -4,6 +4,7 @@
 #include "BasicExceptions.hpp"
 #include "ExceptionTypes.hpp"
 #include "IOExceptions.hpp"
+#include "CustomExceptions.hpp"
 
 /**************************************/
 
