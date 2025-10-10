@@ -7,33 +7,12 @@
 #include <string>
 #include <cmath>
 #include <cctype>
+#include "Common.hpp"
 #include "ExceptionTypes.hpp"
 
 /**************************************/
 
 /********* Define statements *********/
-
-#define SIMPLE_TRY_CATCH_BLOCK(function_call, exception_type)   \
-do                                                              \
-{                                                               \
-    try                                                         \
-    {                                                           \
-        function_call;                                          \
-    }                                                           \
-    catch(const exception_type& et)                             \
-    {                                                           \
-        std::cerr << et.what() << std::endl;                    \
-    }                                                           \
-    catch(const std::exception& e)                              \
-    {                                                           \
-        std::cerr << e.what() << std::endl;                     \
-    }                                                           \
-    catch(...)                                                  \
-    {                                                           \
-        std::cerr << "Generic excepion caught" << std::endl;    \
-    }                                                           \
-}                                                               \
-while(0);
 
 #define MAX_INPUT_STR_LEN   10
 
