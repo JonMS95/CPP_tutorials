@@ -3,6 +3,8 @@
 
 /******** Function prototypes *********/
 
+void causeCustomException();
+
 /**************************************/
 
 #endif

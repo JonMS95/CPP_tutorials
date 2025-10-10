@@ -62,6 +62,8 @@ static void TestFileIOExceptions(void)
 static void TestCustomExceptions(void)
 {
     PrintTestHeader(MSG_TEST_CUSTOM_EXCEPTIONS);
+
+    causeCustomException();
 }
 
 static void TestNoexceptkeyword(void)

@@ -1,11 +1,9 @@
 /********* Include statements *********/
 
 #include <stdexcept>
+#include <string>
+#include "Common.hpp"
 #include "CustomExceptions.hpp"
-
-/**************************************/
-
-/********* Define statements *********/
 
 /**************************************/
 
@@ -26,6 +24,17 @@
 // (except possibly virtual but override instead, in case it's not meant to be derived anymore).
 // An alternative (and popular) choice is to call the base constructor in the derived class constructor
 // especially in those cases in which the base class constructor takes a string as input parameter.
+// This can only be applied to already extended classes:
+//
+// class out_of_range : public logic_error
+// {
+//     public:
+//     explicit out_of_range(const string& __arg);
+//
+//     // Default copy constructor, assignment operator overload, move constructor here.
+//
+//     virtual ~out_of_range() noexcept;
+// };
 //
 // Typical derived class' what() method prototype should look like follows:
 //
@@ -37,19 +46,66 @@
 // ·noexcept: the method should not throw any exception.
 // ·override: as the base class method is virtual, it should be overriden in the derived class.
 
-/***** Private function prototypes ****/
+/***** Extended class definitions *****/
 
-/**************************************/
-
-/******** Function definitions *********/
+// Simplest example: deriving absolute base class. Only what method is overriden.
 
 class MyException : public std::exception
 {
 public:
     const char* what() const noexcept override
     {
-
+        return "Custom exception message (class: MyException)";
     }
 };
+
+// Derived class take a constant reference to a string as an input parameter, which
+// is the string to be returned whenever an exception happens (by .what()).
+// When deriving an already derived class, upper-level class constructor can be used.
+
+class FileNotFoundException : public std::runtime_error
+{
+public:
+    explicit FileNotFoundException(const std::string& file_name):
+        std::runtime_error("File not found: " + file_name) {}
+};
+
+// Although base class constructor constructor can be called, .what() method can also
+// be overriden.
+
+class InvalidAgeException : public std::out_of_range
+{
+private:
+    const std::string message;
+
+public:
+    InvalidAgeException(const int age):
+        std::out_of_range("OOR: (invalid age)"), message("Invalid age: " + std::to_string(age)) {}
+
+    const char* what() const noexcept override
+    {
+        return message.c_str();
+    }
+};
+
+/**************************************/
+
+/***** Private function prototypes ****/
+
+static void throwCustomException(void);
+
+/**************************************/
+
+/******** Function definitions ********/
+
+static void throwCustomException(void)
+{
+    throw MyException();
+}
+
+void causeCustomException()
+{
+    SIMPLE_TRY_CATCH_BLOCK(throwCustomException(), MyException);
+}
 
 /**************************************/
