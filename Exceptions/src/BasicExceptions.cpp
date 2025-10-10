@@ -41,7 +41,7 @@ void throwingBuiltInTypes(void)
         if((x % 2) != 0)
             throw -1;
     }
-    catch(int e)
+    catch(const int& e)
     {
         std::cout << "Exception caught (built-in type): " << e << std::endl;
     }
@@ -55,7 +55,7 @@ void throwStandardException(void)
     {
         vec.at(7);
     }
-    catch(std::out_of_range e)
+    catch(const std::out_of_range& e)
     {
         std::cout << "Caught out of range exception: " << e.what() << std::endl;
     }
