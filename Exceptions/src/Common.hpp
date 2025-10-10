@@ -1,6 +1,15 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
+/********* Include statements *********/
+
+#include <iostream>
+#include <stdexcept>
+
+/**************************************/
+
+/********* Define statements *********/
+
 #define MSG_GEN_EXC "Generic exception caught: "
 #define MSG_UNK_EXC "Unknown exception caught"
 
@@ -24,6 +33,8 @@ do                                                              \
         std::cerr << MSG_UNK_EXC << std::endl;                  \
     }                                                           \
 }                                                               \
-while(0);
+while(0)
+
+/**************************************/
 
 #endif
