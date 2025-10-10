@@ -4,6 +4,7 @@
 #include "BasicExceptions.hpp"
 #include "ExceptionTypes.hpp"
 #include "IOExceptions.hpp"
+#include "CustomExceptions.hpp"
 
 /**************************************/
 
@@ -61,6 +62,10 @@ static void TestFileIOExceptions(void)
 static void TestCustomExceptions(void)
 {
     PrintTestHeader(MSG_TEST_CUSTOM_EXCEPTIONS);
+
+    causeCustomException();
+    causeFileNotFoundException();
+    causeInvalidAgeException();
 }
 
 static void TestNoexceptkeyword(void)
