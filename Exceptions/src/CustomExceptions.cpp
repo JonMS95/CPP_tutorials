@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <string>
+#include <fstream>
 #include "Common.hpp"
 #include "CustomExceptions.hpp"
 
@@ -45,6 +46,12 @@
 // ·const: since the method modifies nothing, const qualifier should be used.
 // ·noexcept: the method should not throw any exception.
 // ·override: as the base class method is virtual, it should be overriden in the derived class.
+
+/********* Include statements *********/
+
+#define DEFAULT_PATH_NAME   "non_existing_path.txt"
+
+/**************************************/
 
 /***** Extended class definitions *****/
 
@@ -93,6 +100,7 @@ public:
 /***** Private function prototypes ****/
 
 static void throwCustomException(void);
+static void readFile(const std::string& file_path);
 
 /**************************************/
 
@@ -103,9 +111,29 @@ static void throwCustomException(void)
     throw MyException();
 }
 
-void causeCustomException()
+static void readFile(const std::string& file_path)
+{
+    std::ifstream file;
+
+    file.open(file_path);
+
+    if(file.badbit)
+        throw FileNotFoundException(file_path);
+
+    std::string line;
+
+    while(std::getline(file, line))
+        std::cout << line << std::endl;
+}
+
+void causeCustomException(void)
 {
     SIMPLE_TRY_CATCH_BLOCK(throwCustomException(), MyException);
+}
+
+void causeFileNotFoundException(void)
+{
+    SIMPLE_TRY_CATCH_BLOCK(readFile(DEFAULT_PATH_NAME), FileNotFoundException);
 }
 
 /**************************************/

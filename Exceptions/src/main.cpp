@@ -64,6 +64,7 @@ static void TestCustomExceptions(void)
     PrintTestHeader(MSG_TEST_CUSTOM_EXCEPTIONS);
 
     causeCustomException();
+    causeFileNotFoundException();
 }
 
 static void TestNoexceptkeyword(void)

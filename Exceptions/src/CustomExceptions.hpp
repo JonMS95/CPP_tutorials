@@ -3,7 +3,8 @@
 
 /******** Function prototypes *********/
 
-void causeCustomException();
+void causeCustomException(void);
+void causeFileNotFoundException(void);
 
 /**************************************/
 
