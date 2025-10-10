@@ -3,6 +3,7 @@
 #include <iostream>
 #include "BasicExceptions.hpp"
 #include "ExceptionTypes.hpp"
+#include "IOExceptions.hpp"
 
 /**************************************/
 
@@ -53,6 +54,8 @@ static void TestExceptionTypes(void)
 static void TestFileIOExceptions(void)
 {
     PrintTestHeader(MSG_TEST_FILE_IO_EXCEPTIONS);
+
+    printFileContent();
 }
 
 static void TestCustomExceptions(void)
