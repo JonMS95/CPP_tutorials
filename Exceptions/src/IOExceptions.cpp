@@ -1,5 +1,9 @@
 /********* Include statements *********/
 
+#include <string>
+#include <iostream>
+#include <fstream>
+#include "Common.hpp"
 #include "ExceptionTypes.hpp"
 
 /**************************************/
@@ -21,23 +25,40 @@
 // These bits' values can be easily retrieved by using .is_open(), .is_fail(), .bad(), .good() respectively.
 //
 // Luckily, exceptions can be enabled for file operations per stream object, by using file.exceptions() and
-// passing an or-mask of the error bits to be watched (see below):
+// passing an or-mask of the error bits to be watched (see the example below):
 // file.exceptions(std::ios::failbit | std::ios::badbit)
-
-/********* Define statements *********/
-
-
-
-/**************************************/
 
 /***** Private function prototypes ****/
 
-
+static void readLineByLine(const std::string& file_path, std::ifstream& file);
 
 /**************************************/
 
 /******** Function definitions *********/
 
+static void readLineByLine(const std::string& file_path, std::ifstream& file, unsigned long& num_of_lines)
+{
+    file.open(file_path);
+    std::string line;
 
+    while(std::getline(file, line))
+    {
+        ++num_of_lines;
+        std::cout << line << std::endl;
+    }
+}
+
+unsigned long printFileContent(const std::string& file_path)
+{
+    std::ifstream file; // Input file stream object.
+
+    file.exceptions(std::ios::failbit | std::ios::badbit);  // Generate fail and bad bits related exceptions.
+
+    unsigned long ret = 0;
+
+    SIMPLE_TRY_CATCH_BLOCK(readLineByLine(file_path, file, ret), std::ios_base::failure);
+
+    return ret;
+}
 
 /**************************************/
