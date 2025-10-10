@@ -46,6 +46,8 @@ static void readLineByLine(const std::string& file_path, std::ifstream& file, un
         ++num_of_lines;
         std::cout << line << std::endl;
     }
+    
+    file.close();
 }
 
 unsigned long printFileContent(const std::string& file_path)
