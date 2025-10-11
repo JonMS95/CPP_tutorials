@@ -5,6 +5,7 @@
 #include "ExceptionTypes.hpp"
 #include "IOExceptions.hpp"
 #include "CustomExceptions.hpp"
+#include "Noexcept.hpp"
 
 /**************************************/
 
@@ -71,6 +72,10 @@ static void TestCustomExceptions(void)
 static void TestNoexceptkeyword(void)
 {
     PrintTestHeader(MSG_TEST_NOEXCEPT_KEYWORD);
+
+    sayHello("Hello");
+    exceptionPropagationWithNoexcept();
+    testConditionalExceptions();
 }
 
 int main()
