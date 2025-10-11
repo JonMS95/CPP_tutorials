@@ -55,24 +55,24 @@ void demoBasicTypeTraits(void)
     // Check integral types. std::is_integral will return true for all types in C++ that represent whole integer types.
     {
         COMP_CHECK_TYPE(integral);
-        COMP_FAMILY_TYPES(int,         integral, std::is_integral);
-        COMP_FAMILY_TYPES(char,        integral, std::is_integral);
-        COMP_FAMILY_TYPES(double,      integral, std::is_integral);
-        COMP_FAMILY_TYPES(std::string, integral, std::is_integral);
-        
-        COMP_FAMILY_TYPES(decltype(var_int),   integral, std::is_integral);
-        COMP_FAMILY_TYPES(decltype(var_float), integral, std::is_integral);
+
+        COMP_FAMILY_TYPES(int,                  integral, std::is_integral);
+        COMP_FAMILY_TYPES(char,                 integral, std::is_integral);
+        COMP_FAMILY_TYPES(double,               integral, std::is_integral);
+        COMP_FAMILY_TYPES(std::string,          integral, std::is_integral);
+        COMP_FAMILY_TYPES(decltype(var_int),    integral, std::is_integral);
+        COMP_FAMILY_TYPES(decltype(var_float),  integral, std::is_integral);
     }
     // Check floating-point types. std::is_floating_point will return true for all types in C++ that represent floating-point numbers.
     {
         COMP_CHECK_TYPE(floating-point);
 
-        COMP_FAMILY_TYPES(float, floating-point, std::is_floating_point);
-        COMP_FAMILY_TYPES(double, floating-point, std::is_floating_point);
-        COMP_FAMILY_TYPES(int, floating-point, std::is_floating_point);
-        COMP_FAMILY_TYPES(std::string, floating-point, std::is_floating_point);
-        COMP_FAMILY_TYPES(decltype(var_int),   integral, std::is_floating_point);
-        COMP_FAMILY_TYPES(decltype(var_float), integral, std::is_floating_point);        
+        COMP_FAMILY_TYPES(float,                floating-point, std::is_floating_point);
+        COMP_FAMILY_TYPES(double,               floating-point, std::is_floating_point);
+        COMP_FAMILY_TYPES(int,                  floating-point, std::is_floating_point);
+        COMP_FAMILY_TYPES(std::string,          floating-point, std::is_floating_point);
+        COMP_FAMILY_TYPES(decltype(var_int),    integral,       std::is_floating_point);
+        COMP_FAMILY_TYPES(decltype(var_float),  integral,       std::is_floating_point);        
     }
     // It can also be checked whether a given variable is a pointer or not, regardless of the pointed variable's type. Use std::is_pointer.
     {
