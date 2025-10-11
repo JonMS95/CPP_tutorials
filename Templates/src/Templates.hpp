@@ -5,10 +5,11 @@
 
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 /**************************************/
 
-// The concept of template in C++ imay be applied both for functions and classes. Templates in C++ are basically
+// The concept of template in C++ may be applied both for functions and classes. Templates in C++ are basically
 // a blueprint that lets the class or function work with multiple data types without having to declare those types
 // explicitly.
 
@@ -77,12 +78,34 @@ template<typename T> T TemplateAdd(T a, T b)
 }
 
 // The explicit type the template function should work with can also be explicitly told, instead of using typename
-// variables, which make the function usable with (almost) any variable type. This does not make much sense, but it
-// just can exist.
+// variables, which make the function usable with (almost) any variable type. Despite looking useless (as we can
+// simply pass another input parameter), it may actually make sense if the aim is to evaluate such explicit type
+// during compilation time instead of runtime.
 template<int number> void TemplatePrintInt()
 {
     std::cout << number << std::endl;
 }
+
+// The example template function above uses type template to decide whether to multiply or divide based on such
+// template parameter.
+template<bool mult> int multIfTrueElseDiv(const int x, const int y)
+{
+    if constexpr(mult)
+        return (x * y);
+    
+    if(y == 0)
+        throw std::invalid_argument("Division by zero");
+
+    return (x / y);
+}
+
+// In the case above, constexpr is being used to implement it during runtime with a different branch each time.
+// If mult == true, then the function will be equal to:
+// 
+// return (x * y);
+//
+// Rendering the remaining code useless as a return statement is found within the constexpr-marked if. In the same
+// fashion, only the code after the if statement will be implemented during compile time.
 
 /**************************************/
 

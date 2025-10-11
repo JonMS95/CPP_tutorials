@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <stdexcept>
 #include "Templates.hpp"
 
 /**************************************/
@@ -54,6 +55,17 @@ void TestTemplates()
 
     std::cout << ( template_array_0[0] + template_array_0[1] + template_array_0[2] ) << std::endl;
     std::cout << "Birth date: " << template_array_1[0] << template_array_1[1] << template_array_1[2] << template_array_1[3] << std::endl;
+
+    int test_mult = multIfTrueElseDiv<true>(3, 2);
+    int test_div = multIfTrueElseDiv<false>(51, 17);
+
+    auto prn_mult_div = [](const int x, const int y, int ret, const bool is_mult) -> void
+    {
+        std::cout << x << (is_mult ? " * " : " / ") << y << " = " << ret << std::endl;
+    };
+
+    prn_mult_div(3, 2, test_mult, true);
+    prn_mult_div(51, 17, test_div, false);
 }
 
 int main()
