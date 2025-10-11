@@ -6,6 +6,10 @@
 
 /**************************************/
 
+// Type traits is a module that is pretty useful in those situations in which types have to be compared or the behaviour of 
+// the program should depend on the type of a variable. Type familys can be compared, same as variable types against either
+// built-in or custom types.
+
 /********* Define statements *********/
 
 #define TYPE_SECTION_SEPARATOR "---------------------------------"
