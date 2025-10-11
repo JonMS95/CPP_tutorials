@@ -5,6 +5,7 @@
 
 void sayHello(const char* input) noexcept;
 void exceptionPropagationWithNoexcept(void) noexcept;
+void testConditionalExceptions(void);
 
 /**************************************/
 

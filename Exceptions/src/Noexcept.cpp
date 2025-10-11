@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <stack>
+#include "Common.hpp"
 #include "Noexcept.hpp"
 
 /**************************************/
@@ -21,6 +22,17 @@ static T getStackTop(std::stack<T> st)
     std::cout << "Stack top value is: " << ret << std::endl;
 
     return ret;
+}
+
+template <bool CanThrow>
+static void maybeNoExcept(void) noexcept(!CanThrow)
+{
+    std::cout << "Entering " << __func__ <<  "." << std::endl;
+
+    if constexpr (CanThrow)
+        throw std::runtime_error("Generic runtime error (CanThrow == true)");
+
+    std::cout << "Exiting " << __func__ << " safely." << std::endl;
 }
 
 /**************************************/
@@ -51,6 +63,12 @@ void exceptionPropagationWithNoexcept(void) noexcept
     // If line above was commented, the exception wouldn't be propagated properly.
 
     getStackTop(st);
+}
+
+void testConditionalExceptions(void)
+{
+    SIMPLE_TRY_CATCH_BLOCK(maybeNoExcept<true>(), std::runtime_error);
+    maybeNoExcept<false>();
 }
 
 /**************************************/

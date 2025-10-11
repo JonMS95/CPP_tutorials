@@ -75,6 +75,7 @@ static void TestNoexceptkeyword(void)
 
     sayHello("Hello");
     exceptionPropagationWithNoexcept();
+    testConditionalExceptions();
 }
 
 int main()
