@@ -23,7 +23,7 @@ static void TesttypeTraitsIntro(void)
 {
     PrintTestHeader(MSG_TEST_TYPE_TRAITS_INTRO);
 
-
+    demoBasicTypeTraits();
 }
 
 int main()

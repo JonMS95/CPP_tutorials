@@ -3,6 +3,8 @@
 
 /******** Function prototypes *********/
 
+void demoBasicTypeTraits(void);
+
 /**************************************/
 
 #endif
