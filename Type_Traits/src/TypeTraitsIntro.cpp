@@ -74,12 +74,19 @@ void demoBasicTypeTraits(void)
         COMP_FAMILY_TYPES(int, int-pointer, std::is_pointer);
     }
     // Exact types can be checked as well: std::is_same<T, U>::value. Since C++17, std::is_same_v<T, U> can be used so as to avoid ::value field retrieval.
+    // Use decltype alongside the variable in question to retrieve its type.
     {
         COMP_CHECK_TYPE(int);
+        class myClass{};
+        typedef struct{} myStruct;
         int var_int = 1;
         int var_float = 1.1f;
-        COMP_TYPES(decltype(var_int), int, std::is_same);
-        COMP_TYPES(decltype(var_int), float, std::is_same);
+        myClass dummy_class;
+        myStruct dummy_struct;
+        COMP_TYPES(decltype(var_int),       int,        std::is_same);
+        COMP_TYPES(decltype(var_float),     int,        std::is_same);
+        COMP_TYPES(decltype(dummy_class),   myClass,    std::is_same);
+        COMP_TYPES(decltype(dummy_class),   myStruct,   std::is_same);
     }
 }
 
