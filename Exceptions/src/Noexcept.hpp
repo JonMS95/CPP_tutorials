@@ -3,7 +3,8 @@
 
 /******** Function prototypes *********/
 
-
+void sayHello(const char* input) noexcept;
+void exceptionPropagationWithNoexcept(void) noexcept;
 
 /**************************************/
 
