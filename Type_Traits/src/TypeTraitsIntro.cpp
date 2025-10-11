@@ -9,6 +9,10 @@
 // Type traits is a module that is pretty useful in those situations in which types have to be compared or the behaviour of 
 // the program should depend on the type of a variable. Type familys can be compared, same as variable types against either
 // built-in or custom types.
+//
+// All of this comparisons return values during compile time (they are qualified as constexpr). This concept will show up
+// on the following lessons. For instance, it may be useful if the aim is to execute a template function differently
+// depending on the input type.
 
 /********* Define statements *********/
 
