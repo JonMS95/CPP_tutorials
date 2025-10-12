@@ -33,6 +33,7 @@ static void TestCompileTimeDecisions(void)
     PrintTestHeader(MSG_TEST_COMPILE_TIME_DECISIONS);
 
     testVectorSum();
+    testVectorAvg();
 }
 
 int main()
