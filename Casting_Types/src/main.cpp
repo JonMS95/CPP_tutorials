@@ -85,7 +85,7 @@ types are the same.
 
 void TestConstCast(void)
 {
-    PrintTestHeader(MSG_TEST_DYNAMIC_CAST);
+    PrintTestHeader(MSG_TEST_CONST_CAST);
 
     const int a = 1;
     int& b = const_cast<int&>(a);
