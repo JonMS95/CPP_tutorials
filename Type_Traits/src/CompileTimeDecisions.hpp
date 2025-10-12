@@ -9,6 +9,14 @@
 
 /**************************************/
 
+// When using templates, it may happen that no function overloading is required since many input types are compatible.
+// However, it may also occur that some of the types are not compatible with the operation in question. In such cases,
+// we may want to throw an exception, exit the function or whatever.
+//
+// As mentioned in the basic type traits tutorial, all of these type traits operations are performed during compile-time
+// (they are marked as constexpr). This way, multiple branches may exist on different function instances depending on
+// the input variable type it's being called with.
+
 /***** Extended class definitions *****/
 
 class InvalidTypeException : public std::invalid_argument
