@@ -97,7 +97,7 @@ public:
     }
 };
 
-// Note that in the example shown above, bass class' constructor must be called, since base class
+// Note that in the example shown above, base class' constructor must be called, since base class
 // has no default constructor in this case. Also take into account that there's no point in providing
 // an input parameter to the base class constructor as .what() method is overriden, leading it to
 // never being outputted.
