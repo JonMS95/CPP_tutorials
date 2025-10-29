@@ -1,6 +1,8 @@
 /********* Include statements *********/
 
 #include <iostream>
+#include "GetPath.hpp"
+#include "BasicFileIO.hpp"
 
 /**************************************/
 
@@ -22,10 +24,12 @@ static void TestBasicFileIO(void)
 {
     PrintTestHeader(MSG_TEST_BASIC_FILE_IO);
 
-    // writeToFile(filename);
-    // readFromFile(filename);
-    // appendToFile(filename);
-    // readWriteExample(filename);
+    std::string filename = getAbsolutePath("../test.txt");
+
+    writeToFile(filename);
+    readFromFile(filename);
+    appendToFile(filename);
+    readWriteExample(filename);
 }
 
 int main()
