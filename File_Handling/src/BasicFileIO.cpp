@@ -6,7 +6,7 @@
 
 /**************************************/
 
-/********* Include statements *********/
+/********* Define statements **********/
 
 #define FILE_OPEN_CHECK(file_path)                                          \
 do                                                                          \
