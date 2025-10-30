@@ -6,20 +6,15 @@
 
 /******** Function definitions ********/
 
+// relativePath: e.g., "../test.txt"
 std::string getAbsolutePath(const std::string& relativePath)
 {
-    fs::path current = fs::current_path();
-    fs::path targetFile = relativePath;
+    fs::path sourceDir = fs::path(__FILE__).parent_path(); // source file's directory
+    fs::path absPath = fs::absolute(sourceDir / relativePath);
 
-    // Walk up the directory tree until the file is found or we reach the root
-    while (!fs::exists(current / targetFile)) {
-        if (current.has_parent_path())
-            current = current.parent_path();
-        else
-            throw std::runtime_error("File not found in any parent directory: " + relativePath);
-    }
+    if (!fs::exists(absPath))
+        throw std::runtime_error("File not found: " + absPath.string());
 
-    fs::path absPath = fs::absolute(current / targetFile);
     return absPath.string();
 }
 
