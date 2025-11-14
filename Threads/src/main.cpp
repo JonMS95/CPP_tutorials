@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "BasicThreads.hpp"
+#include "Mutexes.hpp"
 
 /**************************************/
 
@@ -9,6 +10,7 @@
 
 #define MSG_TEST_HEADER         "*********************************"
 #define MSG_TEST_BASIC_THREADS  "Testing basic threads."
+#define MSG_TEST_MUTEXES        "Testing mutexes."
 
 /**************************************/
 
@@ -32,9 +34,19 @@ static void TestSimpleThreads(void)
     detachedThreads();
 }
 
+static void TestMutexes(void)
+{
+    PrintTestHeader(MSG_TEST_MUTEXES);
+
+    countUntilNumberWithTwoThreads();
+    incrementUnsafelyWithTwoThreads();
+    incrementSafelyWithTwoThreads();
+}
+
 int main()
 {
     TestSimpleThreads();
+    TestMutexes();
 
     return 0;
 }
