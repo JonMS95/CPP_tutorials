@@ -4,6 +4,8 @@
 #include <thread>
 #include <vector>
 #include <mutex>
+#include <chrono>
+#include <string>
 
 /**************************************/
 
@@ -47,8 +49,7 @@ static void countToNum(const int n = 10000);
 static void incrementNTimesUnsafely(unsigned long long& x, const unsigned long long n = 10000);
 static void incrementNTimesSafely(unsigned long long& x, const unsigned long long n, std::mutex& m);
 static void incrementNTimesWithLockGuard(unsigned long long& x, const unsigned long long n, std::mutex& m);
-
-/**************************************/
+static void printMessage(const std::string& msg, std::mutex& m);
 
 /**************************************/
 
@@ -85,6 +86,23 @@ static void incrementNTimesWithLockGuard(unsigned long long& x, const unsigned l
     {
         std::lock_guard<std::mutex> lock(m);
         ++x;
+    }
+}
+
+// Try-lock tries to acquire target mutex. Using common lock techniques would lead to a deadlock while executing the function below.
+static void printMessage(const std::string& msg, std::mutex& m)
+{
+    // If mutex was successfully acquired, then go ahead and print provided message.
+    if(m.try_lock())
+    {
+        std::cout << msg << std::endl;
+        // Take a nap so that other threads trying to acquire provided lock cannot do so.
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        m.unlock();
+    }
+    else
+    {
+        std::cout << "Could not aquire mutex lock." << std::endl;
     }
 }
 
@@ -152,6 +170,16 @@ void incrementWithLockGuardAndNThreads(const int n)
         vec_th[i].join();
 
     std::cout << "(" << __func__ << ") after having counted up to " << limit << " " << n << " times, x: " << x << "." << std::endl;
+}
+
+void printMessageFromThreads(void)
+{
+    std::mutex m;
+    std::thread t_0(printMessage, "Hello from t_0!", std::ref(m));
+    std::thread t_1(printMessage, "Hello from t_1!", std::ref(m));
+
+    t_0.join();
+    t_1.join();
 }
 
 /**************************************/
