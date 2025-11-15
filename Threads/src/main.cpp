@@ -43,6 +43,8 @@ static void TestMutexes(void)
     incrementSafelyWithNThreads();
     incrementWithLockGuardAndNThreads();
     printMessageFromThreads();
+    greetWithFromTwoThreads();
+    runFibonacciRecursively();
 }
 
 int main()
