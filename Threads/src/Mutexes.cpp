@@ -54,6 +54,7 @@ static void incrementNTimesWithLockGuard(unsigned long long& x, const unsigned l
 static void printMessage(const std::string& msg, std::mutex& m);
 static void greetWithDoubleMutex(const std::string& msg, std::mutex& m0, std::mutex& m1);
 static int  recursiveFibonacci(const int n, std::recursive_mutex& m);
+static void tryToGreetWithForGivenTime(const std::string& msg, std::timed_mutex& m, const int seconds);
 
 /**************************************/
 
@@ -134,6 +135,23 @@ static int recursiveFibonacci(const int n, std::recursive_mutex& m)
     return recursiveFibonacci(n - 1, m) + recursiveFibonacci(n - 2, m);
 }
 
+static void tryToGreetWithForGivenTime(const std::string& msg, std::timed_mutex& m, const int seconds)
+{
+    // Tries to lock for a given time span. Alternatively, 
+    if(m.try_lock_for(std::chrono::seconds(seconds)))
+    {
+        std::cout << msg << std::endl;
+        
+        // Wait for some more time for 
+        std::this_thread::sleep_for(std::chrono::seconds(seconds + 1));
+
+        m.unlock();
+    }
+    else
+    {
+        std::cout << "Could not acquire mutex, timeout elapsed." << std::endl;
+    }
+}
 
 void countUntilNumberWithTwoThreads(void)
 {
@@ -227,6 +245,17 @@ void runFibonacciRecursively(const int num_idx)
     std::recursive_mutex m;
     std::thread t(recursiveFibonacci, num_idx, std::ref(m));
     t.join();
+}
+
+void greetWithTimeout(void)
+{
+    std::timed_mutex tm;
+    
+    std::thread t0(tryToGreetWithForGivenTime, "Try to lock from thread t0", std::ref(tm), 1);
+    std::thread t1(tryToGreetWithForGivenTime, "Try to lock from thread t1", std::ref(tm), 1);
+    
+    t0.join();
+    t1.join();
 }
 
 /**************************************/
