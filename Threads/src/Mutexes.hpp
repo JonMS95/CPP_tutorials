@@ -6,6 +6,7 @@
 void countUntilNumberWithTwoThreads(void);
 void incrementUnsafelyWithNThreads(const int n = 2);
 void incrementSafelyWithNThreads(const int n = 2);
+void incrementWithLockGuardAndNThreads(const int n = 2);
 
 /**************************************/
 

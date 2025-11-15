@@ -19,6 +19,10 @@ wanted).
 
 Functions (or more accurately, callables) should return void. Actually, return types are allowed but
 they are ignored so there's no point in returning anything.
+
+So as to make mutex usage safer, lock_guard can be used, ensuring it will be unlocked afterwards.
+unique_lock is algo a good choice: it provides safety as well as recursive locks, try-locks and
+condition variables.
 */
 
 /********* Define statements **********/
@@ -35,8 +39,6 @@ they are ignored so there's no point in returning anything.
 
 /********* Private variables **********/
 
-
-
 /**************************************/
 
 /**** Private function prototypes *****/
@@ -44,6 +46,7 @@ they are ignored so there's no point in returning anything.
 static void countToNum(const int n = 10000);
 static void incrementNTimesUnsafely(unsigned long long& x, const unsigned long long n = 10000);
 static void incrementNTimesSafely(unsigned long long& x, const unsigned long long n, std::mutex& m);
+static void incrementNTimesWithLockGuard(unsigned long long& x, const unsigned long long n, std::mutex& m);
 
 /**************************************/
 
@@ -72,6 +75,16 @@ static void incrementNTimesSafely(unsigned long long& x, const unsigned long lon
         m.lock();
         ++x;
         m.unlock();
+    }
+}
+
+// This version uses lock guard. This method unlocks the mutex by itself when exiting the scope.
+static void incrementNTimesWithLockGuard(unsigned long long& x, const unsigned long long n, std::mutex& m)
+{
+    for(unsigned long long i = 0; i < n; i++)
+    {
+        std::lock_guard<std::mutex> lock(m);
+        ++x;
     }
 }
 
@@ -113,6 +126,25 @@ void incrementSafelyWithNThreads(const int n)
     std::mutex m;
     // Mutex handling is simpler in C++ (it does not need any explicit initialization as in C due to it being a class instance).
 
+    for(int i = 0; i < static_cast<int>(vec_th.size()); i++)
+        vec_th[i] = std::thread(incrementNTimesSafely, std::ref(x), limit, std::ref(m));
+    
+    for(int i = 0; i < static_cast<int>(vec_th.size()); i++)
+        vec_th[i].join();
+
+    std::cout << "(" << __func__ << ") after having counted up to " << limit << " " << n << " times, x: " << x << "." << std::endl;
+}
+
+void incrementWithLockGuardAndNThreads(const int n)
+{
+    unsigned long long x = 0;
+    unsigned long long limit = 1000000;
+    std::mutex m;
+
+    // Cannot do this since it impies copying threads while threads can only be copied.
+    // std::vector<std::thread> vec_th(n, std::thread(incrementNTimesWithLockGuard, std::ref(x), limit, std::ref(m)));
+
+    std::vector<std::thread> vec_th(n);
     for(int i = 0; i < static_cast<int>(vec_th.size()); i++)
         vec_th[i] = std::thread(incrementNTimesSafely, std::ref(x), limit, std::ref(m));
     
