@@ -4,8 +4,8 @@
 /******** Function prototypes *********/
 
 void countUntilNumberWithTwoThreads(void);
-void incrementUnsafelyWithTwoThreads(const int n = 2);
-void incrementSafelyWithTwoThreads(const int n = 2);
+void incrementUnsafelyWithNThreads(const int n = 2);
+void incrementSafelyWithNThreads(const int n = 2);
 
 /**************************************/
 

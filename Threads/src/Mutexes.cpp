@@ -87,7 +87,7 @@ void countUntilNumberWithTwoThreads(void)
 
 // Passing a reference or global variables to two different threads may be dangerous since it
 // may lead a single memory address to be accessed by those threads simultaneously.
-void incrementUnsafelyWithTwoThreads(const int n)
+void incrementUnsafelyWithNThreads(const int n)
 {
     std::vector<std::thread> vec_th(n);
 
@@ -101,10 +101,10 @@ void incrementUnsafelyWithTwoThreads(const int n)
     for(int i = 0; i < static_cast<int>(vec_th.size()); i++)
         vec_th[i].join();
 
-    std::cout << "(" << __func__ << ") after having counted up to " << limit << n << " times, x: " << x << "." << std::endl;
+    std::cout << "(" << __func__ << ") after having counted up to " << limit << " " << n << " times, x: " << x << "." << std::endl;
 }
 
-void incrementSafelyWithTwoThreads(const int n)
+void incrementSafelyWithNThreads(const int n)
 {
     std::vector<std::thread> vec_th(n);
 

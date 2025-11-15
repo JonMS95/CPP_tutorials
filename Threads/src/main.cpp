@@ -39,8 +39,8 @@ static void TestMutexes(void)
     PrintTestHeader(MSG_TEST_MUTEXES);
 
     countUntilNumberWithTwoThreads();
-    incrementUnsafelyWithTwoThreads();
-    incrementSafelyWithTwoThreads();
+    incrementUnsafelyWithNThreads();
+    incrementSafelyWithNThreads();
 }
 
 int main()
