@@ -42,6 +42,7 @@ static void TestMutexes(void)
     incrementUnsafelyWithNThreads();
     incrementSafelyWithNThreads();
     incrementWithLockGuardAndNThreads();
+    printMessageFromThreads();
 }
 
 int main()
