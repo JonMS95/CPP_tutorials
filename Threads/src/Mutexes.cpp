@@ -6,6 +6,8 @@
 #include <mutex>
 #include <chrono>
 #include <string>
+#include <stdexcept>
+#include "Mutexes.hpp"
 
 /**************************************/
 
@@ -50,6 +52,8 @@ static void incrementNTimesUnsafely(unsigned long long& x, const unsigned long l
 static void incrementNTimesSafely(unsigned long long& x, const unsigned long long n, std::mutex& m);
 static void incrementNTimesWithLockGuard(unsigned long long& x, const unsigned long long n, std::mutex& m);
 static void printMessage(const std::string& msg, std::mutex& m);
+static void greetWithDoubleMutex(const std::string& msg, std::mutex& m0, std::mutex& m1);
+static int  recursiveFibonacci(const int n, std::recursive_mutex& m);
 
 /**************************************/
 
@@ -105,6 +109,31 @@ static void printMessage(const std::string& msg, std::mutex& m)
         std::cout << "Could not aquire mutex lock." << std::endl;
     }
 }
+
+static void greetWithDoubleMutex(const std::string& msg, std::mutex& m0, std::mutex& m1)
+{
+    // Lock them simultaneously as the function is entered.
+    std::lock(m0, m1);
+
+    // Make lock guards responsible of those mutexes (does not lock them, but makes them unlock later).
+    std::lock_guard<std::mutex> lg0(m0, std::adopt_lock);
+    std::lock_guard<std::mutex> lg1(m1, std::adopt_lock);
+
+    std::cout << msg << std::endl;
+}
+
+static int recursiveFibonacci(const int n, std::recursive_mutex& m)
+{
+    if(n < 0)
+        throw std::invalid_argument("Cannot calculate fibonacci number for negative values");
+
+    if( (!n) || (n == 1) )
+        return n;
+    
+    std::lock_guard<std::recursive_mutex> lock(m);
+    return recursiveFibonacci(n - 1, m) + recursiveFibonacci(n - 2, m);
+}
+
 
 void countUntilNumberWithTwoThreads(void)
 {
@@ -180,6 +209,24 @@ void printMessageFromThreads(void)
 
     t_0.join();
     t_1.join();
+}
+
+void greetWithFromTwoThreads(void)
+{
+    std::mutex m_0, m_1;
+
+    std::thread t_0(greetWithDoubleMutex, "Greeting from t0", std::ref(m_0), std::ref(m_1));
+    std::thread t_1(greetWithDoubleMutex, "Greeting from t1", std::ref(m_0), std::ref(m_1));
+
+    t_0.join();
+    t_1.join();
+}
+
+void runFibonacciRecursively(const int num_idx)
+{
+    std::recursive_mutex m;
+    std::thread t(recursiveFibonacci, num_idx, std::ref(m));
+    t.join();
 }
 
 /**************************************/

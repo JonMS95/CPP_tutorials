@@ -8,6 +8,8 @@ void incrementUnsafelyWithNThreads(const int n = 2);
 void incrementSafelyWithNThreads(const int n = 2);
 void incrementWithLockGuardAndNThreads(const int n = 2);
 void printMessageFromThreads(void);
+void greetWithFromTwoThreads(void);
+void runFibonacciRecursively(const int num_idx = 10);
 
 /**************************************/
 
