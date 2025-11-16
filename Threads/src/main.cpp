@@ -14,10 +14,6 @@
 
 /**************************************/
 
-/********* Private variables **********/
-
-/**************************************/
-
 /******** Function definitions ********/
 
 static void PrintTestHeader(const char* header)

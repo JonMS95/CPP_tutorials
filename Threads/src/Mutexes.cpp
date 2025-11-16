@@ -30,22 +30,6 @@ unique_lock is algo a good choice: it provides safety as well as recursive locks
 condition variables.
 */
 
-/********* Define statements **********/
-
-
-
-/**************************************/
-
-/********* Using statements ***********/
-
-
-
-/**************************************/
-
-/********* Private variables **********/
-
-/**************************************/
-
 /**** Private function prototypes *****/
 
 static void countToNum(const int n = 10000);
