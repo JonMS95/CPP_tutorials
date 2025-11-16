@@ -46,6 +46,7 @@ static void TestMutexes(void)
     greetWithFromTwoThreads();
     runFibonacciRecursively();
     greetWithTimeout();
+    readAndWriteMultipleThreads();
 }
 
 int main()
