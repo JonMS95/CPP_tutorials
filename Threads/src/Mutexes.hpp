@@ -11,6 +11,7 @@ void printMessageFromThreads(void);
 void greetWithFromTwoThreads(void);
 void runFibonacciRecursively(const int num_idx = 10);
 void greetWithTimeout(void);
+void readAndWriteMultipleThreads(void);
 
 /**************************************/
 

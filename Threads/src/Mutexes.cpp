@@ -7,6 +7,7 @@
 #include <chrono>
 #include <string>
 #include <stdexcept>
+#include <shared_mutex>
 #include "Mutexes.hpp"
 
 /**************************************/
@@ -55,6 +56,8 @@ static void printMessage(const std::string& msg, std::mutex& m);
 static void greetWithDoubleMutex(const std::string& msg, std::mutex& m0, std::mutex& m1);
 static int  recursiveFibonacci(const int n, std::recursive_mutex& m);
 static void tryToGreetWithForGivenTime(const std::string& msg, std::timed_mutex& m, const int seconds);
+static void readerTask(const int& x, std::shared_mutex& sm);
+static void writerTask(int& x, std::mutex& m);
 
 /**************************************/
 
@@ -151,6 +154,24 @@ static void tryToGreetWithForGivenTime(const std::string& msg, std::timed_mutex&
     {
         std::cout << "Could not acquire mutex, timeout elapsed." << std::endl;
     }
+}
+
+// Shared mutexes allow more than a single thread to access restricted code section.
+static void readerTask(const int& x, std::shared_mutex& sm)
+{
+    // Notice how shared mutexes needn't be unlocked afterwards (it does so by itself when exiting current scope).
+    std::shared_lock lock(sm);
+    std::cout << "Reader sees: " << x << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+}
+
+// Mutexes locked as unique lead to code sections to be accesible solely by a single thread. Same as shared locks, they are unlocked by themselves.
+static void writerTask(int& x, std::mutex& m)
+{
+    std::unique_lock lock(m);
+    ++x;
+    std::cout << "Writer writes: " << x << std::endl;
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 void countUntilNumberWithTwoThreads(void)
@@ -256,6 +277,24 @@ void greetWithTimeout(void)
     
     t0.join();
     t1.join();
+}
+
+void readAndWriteMultipleThreads(void)
+{
+    int x = 0;
+    std::shared_mutex sm;
+    std::mutex m;
+    std::thread t0(readerTask, std::cref(x), std::ref(sm));
+    std::thread t1(readerTask, std::cref(x), std::ref(sm));
+    std::thread t2(writerTask, std::ref(x), std::ref(m));
+    std::thread t3(writerTask, std::ref(x), std::ref(m));
+    std::thread t4(readerTask, std::cref(x), std::ref(sm));
+
+    t0.join();
+    t1.join();
+    t2.join();
+    t3.join();
+    t4.join();
 }
 
 /**************************************/
