@@ -28,6 +28,9 @@ they are ignored so there's no point in returning anything.
 So as to make mutex usage safer, lock_guard can be used, ensuring it will be unlocked afterwards.
 unique_lock is algo a good choice: it provides safety as well as recursive locks, try-locks and
 condition variables.
+
+Not every type of mutex is going to be featured on this lesson, but at least some of the most popular
+so as to grasp basic concepts.
 */
 
 /**** Private function prototypes *****/
