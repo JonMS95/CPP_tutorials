@@ -3,6 +3,7 @@
 #include <iostream>
 #include "BasicThreads.hpp"
 #include "Mutexes.hpp"
+#include "Atomic.hpp"
 
 /**************************************/
 
@@ -11,6 +12,7 @@
 #define MSG_TEST_HEADER         "*********************************"
 #define MSG_TEST_BASIC_THREADS  "Testing basic threads."
 #define MSG_TEST_MUTEXES        "Testing mutexes."
+#define MSG_TEST_ATOMIC         "Testing atomic variables."
 
 /**************************************/
 
@@ -45,10 +47,18 @@ static void TestMutexes(void)
     readAndWriteMultipleThreads();
 }
 
+static void TestAtomic(void)
+{
+    PrintTestHeader(MSG_TEST_ATOMIC);
+
+    incrementAtomicWithNThreads();
+}
+
 int main()
 {
     TestSimpleThreads();
     TestMutexes();
+    TestAtomic();
 
     return 0;
 }
