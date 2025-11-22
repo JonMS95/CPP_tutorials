@@ -1,9 +1,9 @@
-#ifndef LATCHES_HPP
-#define LATCHES_HPP
+#ifndef BARRIERS_HPP
+#define BARRIERS_HPP
 
 /******** Function prototypes *********/
 
-void syncThreadsWithCheckpoint(void);
+void syncThreadsInLoop(void);
 
 /**************************************/
 
