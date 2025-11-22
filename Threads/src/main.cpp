@@ -5,6 +5,7 @@
 #include "Mutexes.hpp"
 #include "Atomic.hpp"
 #include "ConditionVariables.hpp"
+#include "Semaphores.hpp"
 
 /**************************************/
 
@@ -15,6 +16,7 @@
 #define MSG_TEST_MUTEXES        "Testing mutexes."
 #define MSG_TEST_ATOMIC         "Testing atomic variables."
 #define MSG_TEST_CONDITIONS     "Testing conditions."
+#define MSG_TEST_SEMAPHORES     "Testing semaphores."
 
 /**************************************/
 
@@ -63,12 +65,20 @@ static void TestConditions(void)
     conditionConsumerProducerExample();
 }
 
+static void TestSemaphores(void)
+{
+    PrintTestHeader(MSG_TEST_SEMAPHORES);
+
+    accessLimitedresources();
+}
+
 int main()
 {
     TestSimpleThreads();
     TestMutexes();
     TestAtomic();
     TestConditions();
+    TestSemaphores();
 
     return 0;
 }
