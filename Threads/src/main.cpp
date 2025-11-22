@@ -7,6 +7,7 @@
 #include "ConditionVariables.hpp"
 #include "Semaphores.hpp"
 #include "Latches.hpp"
+#include "Barriers.hpp"
 
 /**************************************/
 
@@ -19,6 +20,7 @@
 #define MSG_TEST_CONDITIONS     "Testing conditions."
 #define MSG_TEST_SEMAPHORES     "Testing semaphores."
 #define MSG_TEST_LATCHES        "Testing latches."
+#define MSG_TEST_BARRIERS       "Testing barriers."
 
 /**************************************/
 
@@ -81,14 +83,22 @@ static void TestLatches(void)
     syncThreadsWithCheckpoint();
 }
 
+static void TestBarriers(void)
+{
+    PrintTestHeader(MSG_TEST_BARRIERS);
+
+    syncThreadsInLoop();
+}
+
 int main()
 {
-    TestSimpleThreads();
-    TestMutexes();
-    TestAtomic();
-    TestConditions();
-    TestSemaphores();
-    TestLatches();
+    // TestSimpleThreads();
+    // TestMutexes();
+    // TestAtomic();
+    // TestConditions();
+    // TestSemaphores();
+    // TestLatches();
+    TestBarriers();
 
     return 0;
 }
