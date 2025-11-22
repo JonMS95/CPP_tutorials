@@ -4,6 +4,7 @@
 #include "BasicThreads.hpp"
 #include "Mutexes.hpp"
 #include "Atomic.hpp"
+#include "ConditionVariables.hpp"
 
 /**************************************/
 
@@ -13,6 +14,7 @@
 #define MSG_TEST_BASIC_THREADS  "Testing basic threads."
 #define MSG_TEST_MUTEXES        "Testing mutexes."
 #define MSG_TEST_ATOMIC         "Testing atomic variables."
+#define MSG_TEST_CONDITIONS     "Testing conditions."
 
 /**************************************/
 
@@ -54,11 +56,19 @@ static void TestAtomic(void)
     incrementAtomicWithNThreads();
 }
 
+static void TestConditions(void)
+{
+    PrintTestHeader(MSG_TEST_CONDITIONS);
+
+    conditionConsumerProducerExample();
+}
+
 int main()
 {
     TestSimpleThreads();
     TestMutexes();
     TestAtomic();
+    TestConditions();
 
     return 0;
 }
