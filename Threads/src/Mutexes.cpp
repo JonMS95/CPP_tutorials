@@ -219,7 +219,7 @@ void incrementWithLockGuardAndNThreads(const int n)
 
     std::vector<std::thread> vec_th(n);
     for(int i = 0; i < static_cast<int>(vec_th.size()); i++)
-        vec_th[i] = std::thread(incrementNTimesSafely, std::ref(x), limit, std::ref(m));
+        vec_th[i] = std::thread(incrementNTimesWithLockGuard, std::ref(x), limit, std::ref(m));
     
     for(int i = 0; i < static_cast<int>(vec_th.size()); i++)
         vec_th[i].join();
