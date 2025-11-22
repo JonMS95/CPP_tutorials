@@ -1,5 +1,5 @@
-#ifndef LATCH_HPP
-#define LATCH_HPP
+#ifndef LATCHES_HPP
+#define LATCHES_HPP
 
 /******** Function prototypes *********/
 
