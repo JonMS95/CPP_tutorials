@@ -25,6 +25,9 @@ std::counting_semaphore<max_num> sem(initial_num);
 Where max_num is the maximum number the semaphore can hold and initial_num is its initial value.
 Use the .acquire/release methods when trying to use a semaphore.
 Different methods are available too (such as .try_* methods or .max).
+
+Note that each time a semaphore slot is acquired, its internal counter diminishes by one, so it should
+never have 0 as intial value (it will simply be impossible to get a free slot).
 */
 
 /******** Function definitions *********/

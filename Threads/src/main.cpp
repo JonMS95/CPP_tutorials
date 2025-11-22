@@ -6,6 +6,7 @@
 #include "Atomic.hpp"
 #include "ConditionVariables.hpp"
 #include "Semaphores.hpp"
+#include "Latches.hpp"
 
 /**************************************/
 
@@ -17,6 +18,7 @@
 #define MSG_TEST_ATOMIC         "Testing atomic variables."
 #define MSG_TEST_CONDITIONS     "Testing conditions."
 #define MSG_TEST_SEMAPHORES     "Testing semaphores."
+#define MSG_TEST_LATCHES        "Testing latches."
 
 /**************************************/
 
@@ -72,6 +74,13 @@ static void TestSemaphores(void)
     accessLimitedresources();
 }
 
+static void TestLatches(void)
+{
+    PrintTestHeader(MSG_TEST_LATCHES);
+
+    syncThreadsWithCheckpoint();
+}
+
 int main()
 {
     TestSimpleThreads();
@@ -79,6 +88,7 @@ int main()
     TestAtomic();
     TestConditions();
     TestSemaphores();
+    TestLatches();
 
     return 0;
 }
