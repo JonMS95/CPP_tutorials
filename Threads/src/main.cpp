@@ -9,6 +9,7 @@
 #include "Latches.hpp"
 #include "Barriers.hpp"
 #include "JThreads.hpp"
+#include "FuturesAndPromises.hpp"
 
 /**************************************/
 
@@ -23,6 +24,7 @@
 #define MSG_TEST_LATCHES        "Testing latches."
 #define MSG_TEST_BARRIERS       "Testing barriers."
 #define MSG_TEST_JTHREADS       "Testing JThreads."
+#define MSG_TEST_FUT_AND_PROM   "Testing futures and promises."
 
 /**************************************/
 
@@ -99,16 +101,24 @@ static void TestJThreads(void)
     incrementCounterWithTwoJThreads();
 }
 
+static void TestFuturesAndPromises(void)
+{
+    PrintTestHeader(MSG_TEST_FUT_AND_PROM);
+
+    exampleUsingFutureAndPromise();
+}
+
 int main()
 {
-    TestSimpleThreads();
-    TestMutexes();
-    TestAtomic();
-    TestConditions();
-    TestSemaphores();
-    TestLatches();
-    TestBarriers();
-    TestJThreads();
+    // TestSimpleThreads();
+    // TestMutexes();
+    // TestAtomic();
+    // TestConditions();
+    // TestSemaphores();
+    // TestLatches();
+    // TestBarriers();
+    // TestJThreads();
+    TestFuturesAndPromises();
 
     return 0;
 }
