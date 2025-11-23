@@ -8,6 +8,7 @@
 #include "Semaphores.hpp"
 #include "Latches.hpp"
 #include "Barriers.hpp"
+#include "JThreads.hpp"
 
 /**************************************/
 
@@ -21,6 +22,7 @@
 #define MSG_TEST_SEMAPHORES     "Testing semaphores."
 #define MSG_TEST_LATCHES        "Testing latches."
 #define MSG_TEST_BARRIERS       "Testing barriers."
+#define MSG_TEST_JTHREADS       "Testing JThreads."
 
 /**************************************/
 
@@ -90,15 +92,23 @@ static void TestBarriers(void)
     syncThreadsInLoop();
 }
 
+static void TestJThreads(void)
+{
+    PrintTestHeader(MSG_TEST_JTHREADS);
+
+    incrementCounterWithTwoJThreads();
+}
+
 int main()
 {
-    // TestSimpleThreads();
-    // TestMutexes();
-    // TestAtomic();
-    // TestConditions();
-    // TestSemaphores();
-    // TestLatches();
+    TestSimpleThreads();
+    TestMutexes();
+    TestAtomic();
+    TestConditions();
+    TestSemaphores();
+    TestLatches();
     TestBarriers();
+    TestJThreads();
 
     return 0;
 }
