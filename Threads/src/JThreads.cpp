@@ -9,6 +9,9 @@
 
 /*
 JThreads are same as common threads, but with no need to be joined explicitly (they will do so by themselves).
+This type of threads was introduced in C++20.
+
+JThreads also provide stop tokens. These are just flags that let jthreads know whether they must stop or not.
 */
 
 /********* Using statements ***********/
