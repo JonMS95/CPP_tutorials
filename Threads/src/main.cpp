@@ -131,19 +131,22 @@ static void TestAsync(void)
     PrintTestHeader(MSG_TEST_ASYNC);
 
     asyncExample();
+    asyncExampleWithManyNumbers();
+    asyncExampleWithReference();
+    asyncExampleWithException();
 }
 
 int main()
 {
-    // TestSimpleThreads();
-    // TestMutexes();
-    // TestAtomic();
-    // TestConditions();
-    // TestSemaphores();
-    // TestLatches();
-    // TestBarriers();
-    // TestJThreads();
-    // TestFuturesAndPromises();
+    TestSimpleThreads();
+    TestMutexes();
+    TestAtomic();
+    TestConditions();
+    TestSemaphores();
+    TestLatches();
+    TestBarriers();
+    TestJThreads();
+    TestFuturesAndPromises();
     TestAsync();
 
     return 0;
