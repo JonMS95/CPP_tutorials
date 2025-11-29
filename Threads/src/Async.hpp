@@ -4,6 +4,9 @@
 /******** Function prototypes *********/
 
 void asyncExample(void);
+void asyncExampleWithManyNumbers(void);
+void asyncExampleWithReference(void);
+void asyncExampleWithException(void);
 
 /**************************************/
 
