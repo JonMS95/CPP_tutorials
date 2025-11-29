@@ -5,6 +5,7 @@
 #include <chrono>
 #include <future>
 #include <vector>
+#include <string>
 
 /**************************************/
 
