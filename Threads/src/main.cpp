@@ -10,6 +10,7 @@
 #include "Barriers.hpp"
 #include "JThreads.hpp"
 #include "FuturesAndPromises.hpp"
+#include "Async.hpp"
 
 /**************************************/
 
@@ -25,6 +26,23 @@
 #define MSG_TEST_BARRIERS       "Testing barriers."
 #define MSG_TEST_JTHREADS       "Testing JThreads."
 #define MSG_TEST_FUT_AND_PROM   "Testing futures and promises."
+#define MSG_TEST_ASYNC          "Testing async."
+
+/**************************************/
+
+/**** Private function prototypes *****/
+
+static void PrintTestHeader(const char* header);
+static void TestSimpleThreads(void);
+static void TestMutexes(void);
+static void TestAtomic(void);
+static void TestConditions(void);
+static void TestSemaphores(void);
+static void TestLatches(void);
+static void TestBarriers(void);
+static void TestJThreads(void);
+static void TestFuturesAndPromises(void);
+static void TestAsync(void);
 
 /**************************************/
 
@@ -108,17 +126,28 @@ static void TestFuturesAndPromises(void)
     exampleUsingFutureAndPromise();
 }
 
+static void TestAsync(void)
+{
+    PrintTestHeader(MSG_TEST_ASYNC);
+
+    asyncExample();
+    asyncExampleWithManyNumbers();
+    asyncExampleWithReference();
+    asyncExampleWithException();
+}
+
 int main()
 {
-    // TestSimpleThreads();
-    // TestMutexes();
-    // TestAtomic();
-    // TestConditions();
-    // TestSemaphores();
-    // TestLatches();
-    // TestBarriers();
-    // TestJThreads();
+    TestSimpleThreads();
+    TestMutexes();
+    TestAtomic();
+    TestConditions();
+    TestSemaphores();
+    TestLatches();
+    TestBarriers();
+    TestJThreads();
     TestFuturesAndPromises();
+    TestAsync();
 
     return 0;
 }
