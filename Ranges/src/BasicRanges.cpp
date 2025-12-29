@@ -21,10 +21,8 @@ iterated.
 namespace range_basics
 {
 
-void iterateVector(void)
+void iterateVector(const std::vector<int>& vec)
 {
-    std::vector<int> vec{1, 4, 6, 8, 10};
-
     std::cout << "Vector: ";
 
     for(int v: vec)
@@ -33,10 +31,8 @@ void iterateVector(void)
     std::cout << std::endl;
 }
 
-void iterateList(void)
+void iterateList(const std::list<std::string>& words)
 {
-    std::list<std::string> words{"Hello", "world", "of", "ranges"};
-
     std::cout << "List: ";
 
     for(const std::string& word : words)
@@ -44,13 +40,11 @@ void iterateList(void)
     std::cout << std::endl;
 }
 
-void iterateString(void)
+void iterateString(const std::string& str)
 {
-    std::string s = "abc";
-
     std::cout << "String: ";
 
-    for(const char& c : s)
+    for(const char& c : str)
         std::cout << c << " ";
     
     std::cout << std::endl;
@@ -58,11 +52,11 @@ void iterateString(void)
 
 // iota comes from Greek letter's name, meaning "small" or "incremental". It generates a sequence
 // of incrementing values within a well-defined range.
-void iterateTemporaryRange(void)
+void iterateTemporaryRange(const int start, const int end)
 {
     std::cout << "Temporary range: ";
 
-    for(int i : std::views::iota(1, 10))
+    for(int i : std::views::iota(start, end))
         std::cout << i << " ";
 
     std::cout << std::endl;
