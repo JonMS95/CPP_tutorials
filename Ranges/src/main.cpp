@@ -6,14 +6,16 @@
 #include <string>
 #include "BasicRanges.hpp"
 #include "Views.hpp"
+#include "SubrangesAndSlicing.hpp"
 
 /**************************************/
 
 /********** Define statements *********/
 
-#define MSG_TEST_HEADER         "*********************************"
-#define MSG_TEST_BASIC_RANGES   "Testing basic ranges."
-#define MSG_TEST_VIEWS          "Testing views."
+#define MSG_TEST_HEADER                 "*********************************"
+#define MSG_TEST_BASIC_RANGES           "Testing basic ranges."
+#define MSG_TEST_VIEWS                  "Testing views."
+#define MSG_TEST_SUBRANGES_AND_SLICING  "Testing subranges and slicing."
 
 /**************************************/
 
@@ -22,6 +24,7 @@
 static void PrintTestHeader(const char* header);
 static void TestBasicRanges(void);
 static void TestViews(void);
+static void TestSubrangesAndSlicing(void);
 
 /**************************************/
 
@@ -64,11 +67,21 @@ static void TestViews(void)
     range_basics::iterateVector(doubled_odd_numbers);
 }
 
+void TestSubrangesAndSlicing(void)
+{
+    PrintTestHeader(MSG_TEST_SUBRANGES_AND_SLICING);
+
+    range_basics::iterateVector(subranges_and_slicing::getFirstNIntegers(vec_int, 3));
+    range_basics::iterateVector(subranges_and_slicing::getAllIntegersExceptFirstN(vec_int, 3));
+    range_basics::iterateVector(subranges_and_slicing::getRevertedVector(vec_int));
+    range_basics::iterateVector(subranges_and_slicing::getTrimmedVector(vec_int, 3, 3));
+}
 
 int main()
 {
     TestBasicRanges();
     TestViews();
+    TestSubrangesAndSlicing();
 
     return 0;
 }
