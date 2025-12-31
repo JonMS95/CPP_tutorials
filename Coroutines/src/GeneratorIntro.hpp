@@ -6,6 +6,8 @@
 namespace generator_intro
 {
 
+void generateNumbersCaller(void);
+
 }
 
 /**************************************/
