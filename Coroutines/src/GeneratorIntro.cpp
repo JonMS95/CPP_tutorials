@@ -1,7 +1,7 @@
 /********* Include statements *********/
 
 #include <iostream>
-#include <generator>
+#include "generator.hpp"
 #include "GeneratorIntro.hpp"
 
 /**************************************/
@@ -27,7 +27,7 @@ completion.
 namespace generator_intro
 {
 
-static std::generator<int> numbersGenerator(void)
+static generator<int> numbersGenerator(void)
 {
     co_yield 1;
     co_yield 4;
