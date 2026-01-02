@@ -29,15 +29,45 @@ namespace generator_intro
 
 static generator<int> numbersGenerator(void)
 {
+    std::cout << "Generating numbers..." << std::endl;
+    
     co_yield 1;
     co_yield 4;
     co_yield 9;
 }
 
-void generateNumbersCaller(void)
+static generator<int> squaresGenerator(void)
 {
-    for(int number : numbersGenerator())
-        std::cout << number << std::endl;
+    const int num_max = 10;
+    int num = 0;
+
+    std::cout << "Generating square numbers..." << std::endl;
+
+    while(num <= num_max)
+    {
+        co_yield (num * num);
+        ++num;
+    }
+
+    co_return;
+}
+
+using p_gen = generator<int>(*)(void);
+
+static inline void intGeneratorCaller(p_gen p_generator)
+{
+    for(int num : p_generator())
+        std::cout << num << std::endl;
+}
+
+void numbersGeneratorCaller(void)
+{
+    intGeneratorCaller(numbersGenerator);
+}
+
+void squaresGeneratorCaller(void)
+{
+    intGeneratorCaller(squaresGenerator);
 }
 
 }

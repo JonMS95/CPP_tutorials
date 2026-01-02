@@ -33,7 +33,8 @@ static void PrintTestHeader(const char* header)
 static void TestGeneratorIntro(void)
 {
     PrintTestHeader(MSG_TEST_BASIC_GENERATORS);
-    generator_intro::generateNumbersCaller();
+    generator_intro::numbersGeneratorCaller();
+    generator_intro::squaresGeneratorCaller();
 }
 
 int main()
