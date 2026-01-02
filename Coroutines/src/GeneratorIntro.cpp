@@ -1,6 +1,7 @@
 /********* Include statements *********/
 
 #include <iostream>
+#include <stdexcept>
 #include "generator.hpp"
 #include "GeneratorIntro.hpp"
 
@@ -19,7 +20,11 @@ generator call.
 
 Note that once last co_yield within the generator is reached, the generator
 won't go back to the first co_yield, but it will return nothing instead upon
-completion. 
+completion.
+
+Coroutine generators can be called with input values. However, they can only
+take an input parameter once. Take into account that as lazy expressions,
+values are returned on demand.
 */
 
 /******** Function definitions *********/
@@ -52,9 +57,28 @@ static generator<int> squaresGenerator(void)
     co_return;
 }
 
-using p_gen = generator<int>(*)(void);
+static generator<int> counterGenerator(const int diff)
+{
+    const int max_counter = 10;
+    const int min_counter = -10;
+    int counter = 0;
 
-static inline void intGeneratorCaller(p_gen p_generator)
+    while(true)
+    {
+        if(diff > 1 || diff < -1)
+            throw std::range_error("Input difference can be equal to -1, 0 or 1, no other");
+        
+        if(counter <= min_counter || counter >= max_counter)
+            co_return;
+
+        counter += diff;
+        co_yield counter;
+    }
+}
+
+using p_gen_v = generator<int>(*)(void);
+
+static inline void intGeneratorCaller(p_gen_v p_generator)
 {
     for(int num : p_generator())
         std::cout << num << std::endl;
@@ -68,6 +92,29 @@ void numbersGeneratorCaller(void)
 void squaresGeneratorCaller(void)
 {
     intGeneratorCaller(squaresGenerator);
+}
+
+void counterGeneratorCaller(const bool increment)
+{
+    try
+    {
+        auto gen = counterGenerator((increment ? 1 : -1));
+        auto it = gen.begin();
+
+        while(it != gen.end())
+        {
+            std::cout << "Current counter value: " << *it << std::endl;
+            ++it;
+        }
+    }
+    catch(const std::range_error& re)
+    {
+        std::cerr << "Range error caught: " << re.what() << std::endl;
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Generic error caught: " << e.what() << std::endl;
+    }
 }
 
 }

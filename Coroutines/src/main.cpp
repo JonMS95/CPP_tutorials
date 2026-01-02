@@ -35,6 +35,8 @@ static void TestGeneratorIntro(void)
     PrintTestHeader(MSG_TEST_BASIC_GENERATORS);
     generator_intro::numbersGeneratorCaller();
     generator_intro::squaresGeneratorCaller();
+    generator_intro::counterGeneratorCaller();
+    generator_intro::counterGeneratorCaller(false);
 }
 
 int main()
