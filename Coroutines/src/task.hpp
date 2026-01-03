@@ -11,6 +11,7 @@ on demand).
 */
 
 #include <exception>
+#include <coroutine>
 
 template<typename T>
 struct task {
@@ -18,14 +19,18 @@ struct task {
         T value;
         std::exception_ptr exception;
 
+        // Return the task object to the caller
         task get_return_object() {
             return task{
                 std::coroutine_handle<promise_type>::from_promise(*this)
             };
         }
 
+        // Start immediately (optional: could use suspend_always if you want manual start)
         std::suspend_never initial_suspend() { return {}; }
-        std::suspend_never final_suspend() noexcept { return {}; }
+
+        // Suspend at the end so the frame is still valid until task is destroyed
+        std::suspend_always final_suspend() noexcept { return {}; }
 
         void return_value(T v) { value = v; }
         void unhandled_exception() { exception = std::current_exception(); }
@@ -34,12 +39,32 @@ struct task {
     std::coroutine_handle<promise_type> handle;
 
     explicit task(std::coroutine_handle<promise_type> h) : handle(h) {}
-    ~task() { handle.destroy(); }
+    
+    ~task() {
+        if (handle)
+            handle.destroy();
+    }
 
+    // Get the result; rethrows exception if one occurred
     T get() {
         if (handle.promise().exception)
             std::rethrow_exception(handle.promise().exception);
         return handle.promise().value;
+    }
+
+    // Disable copy, enable move
+    task(const task&) = delete;
+    task& operator=(const task&) = delete;
+
+    task(task&& other) noexcept : handle(other.handle) {
+        other.handle = nullptr;
+    }
+
+    task& operator=(task&& other) noexcept {
+        if (handle) handle.destroy();
+        handle = other.handle;
+        other.handle = nullptr;
+        return *this;
     }
 };
 
