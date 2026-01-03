@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <stdexcept>
-#include "generator.hpp"
+#include "Generator.hpp"
 #include "GeneratorIntro.hpp"
 
 /**************************************/

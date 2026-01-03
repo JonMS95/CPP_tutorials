@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "GeneratorIntro.hpp"
+#include "AsyncTasks.hpp"
 
 /**************************************/
 
@@ -9,6 +10,7 @@
 
 #define MSG_TEST_HEADER             "*********************************"
 #define MSG_TEST_BASIC_GENERATORS   "Testing basic coroutine generators."
+#define MSG_TEST_ASYNC_TASKS        "Testing asynchronous tasks."
 
 /**************************************/
 
@@ -16,6 +18,7 @@
 
 static void PrintTestHeader(const char* header);
 static void TestGeneratorIntro(void);
+static void TestAsynchronousTasks(void);
 
 /**************************************/
 
@@ -39,9 +42,17 @@ static void TestGeneratorIntro(void)
     generator_intro::counterGeneratorCaller(false);
 }
 
+static void TestAsynchronousTasks(void)
+{
+    PrintTestHeader(MSG_TEST_ASYNC_TASKS);
+    async_coroutines::dummyTaskCaller();
+    async_coroutines::delayedSumCaller();
+}
+
 int main()
 {
     TestGeneratorIntro();
+    TestAsynchronousTasks();
 
     return 0;
 }
