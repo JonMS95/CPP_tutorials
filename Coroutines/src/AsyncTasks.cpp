@@ -3,7 +3,8 @@
 #include <iostream>
 #include <coroutine>
 #include "AsyncTasks.hpp"
-#include "task.hpp"
+#include "Task.hpp"
+#include "SleepFor.hpp"
 
 /**************************************/
 
@@ -24,6 +25,7 @@ that implements the "awaitable interface":
 ·await_suspend(coroutine_handle): calle if await_ready was false. Can schedule when the
 coroutine resumes.
 ·await_resume(): provides the value returned by co_await or throws if an execption turned up.
+In our case, an awaitable type will be defined within SleepFor.hpp.
 
 Similar to generators, there is a code concept that's used alongside co_await: tasks. In the
 same fashion, there's a structure that should be created for such purpose (task.hpp).
@@ -40,13 +42,34 @@ namespace async_coroutines
 
 static task<int> dummyTask(void)
 {
+    std::cout << "Dummy task" << std::endl;
     co_return 1;
+}
+
+static task<int> delayedSum(const int a , const int b)
+{
+    std::cout << "a: " << a << ". Waiting for 500 ms..." << std::endl;
+
+    co_await SleepFor{std::chrono::milliseconds{500}};
+
+    std::cout << "b: " << a << ". Waiting for 500 ms..." << std::endl;
+
+    co_await SleepFor{std::chrono::milliseconds{500}};
+
+    co_return (a + b);
 }
 
 void dummyTaskCaller(void)
 {
     auto d = dummyTask();
     
+    std::cout << d.get() << std::endl;
+}
+
+void delayedSumCaller(void)
+{
+    auto d = delayedSum(2, 7);
+
     std::cout << d.get() << std::endl;
 }
 

@@ -7,6 +7,7 @@ namespace async_coroutines
 {
 
 void dummyTaskCaller(void);
+void delayedSumCaller(void);
 
 }
 
