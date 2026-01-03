@@ -46,6 +46,7 @@ static void TestAsynchronousTasks(void)
 {
     PrintTestHeader(MSG_TEST_ASYNC_TASKS);
     async_coroutines::dummyTaskCaller();
+    async_coroutines::delayedSumCaller();
 }
 
 int main()
