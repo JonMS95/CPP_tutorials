@@ -4,6 +4,10 @@
 /*
 The struct below is just some common, well-known boilerplate that's pretty useful when
 it comes to using coroutines' co_await concept.
+
+Tasks are a concept that represent a procedure to be fulfilled, but that different from
+generators, they will solely produce a value upon completion (instead of generating them
+on demand).
 */
 
 #include <exception>
