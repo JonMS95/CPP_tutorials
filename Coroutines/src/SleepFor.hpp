@@ -13,12 +13,10 @@ the well known awaitable interface (await_ready, await_suspend, await_resume).
 struct SleepFor {
     std::chrono::milliseconds duration;
 
-    bool await_ready() const noexcept { return false; } // always suspend
+    bool await_ready() const noexcept { return false; }
     void await_suspend(std::coroutine_handle<> h) const {
-        std::thread([h, d = duration]() {
-            std::this_thread::sleep_for(d);
-            h.resume();  // resume coroutine after sleep
-        }).detach();
+        std::this_thread::sleep_for(duration);
+        h.resume();
     }
     void await_resume() const noexcept {}
 };
