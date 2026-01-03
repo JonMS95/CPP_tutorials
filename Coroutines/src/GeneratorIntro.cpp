@@ -10,6 +10,9 @@
 /*
 A generator is a function that produces values one at a time, pausing between
 each generated value and resuming when the caller asks for the next one.
+Generators are a common coroutine usecase. Same as views (both in C++ and SQL),
+they are kind of expressions that do not hold all of the data in memory but
+the data generator instead.
 
 Different from common functions, generators keep their state so that they can
 follow-up from the last checkpoint once resumed.
