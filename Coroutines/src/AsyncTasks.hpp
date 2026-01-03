@@ -1,12 +1,12 @@
-#ifndef ASYNC_COROUTINES_HPP
-#define ASYNC_COROUTINES_HPP
+#ifndef ASYNC_TASKS_HPP
+#define ASYNC_TASKS_HPP
 
 /******** Function prototypes *********/
 
 namespace async_coroutines
 {
 
-
+void dummyTaskCaller(void);
 
 }
 
