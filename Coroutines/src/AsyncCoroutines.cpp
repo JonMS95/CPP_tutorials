@@ -12,6 +12,9 @@ Before starting, let's make a recap about yield, return and await in the context
 
 It's worth pointing out that a coroutine does not generate nor provide anything when calling
 co_await, but wait for something to happen externally.
+
+Similar to generators, there is a code concept that's used alongside co_await: tasks. In the
+same fashion, there's a structure that should be created for such purpose (task.hpp).
 */
 
 /******** Function definitions *********/
