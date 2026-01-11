@@ -65,6 +65,15 @@ public:
     }
 };
 
+static std::function<int(const int)> dividingFunctionCreator(const int x)
+{
+    if(!x)
+        throw std::invalid_argument("Divider cannot be zero");
+
+    auto fn = [x](const int y) -> int { return (x * y); };
+    return std::function(fn);
+}
+
 void runStdFunctionBasics(void)
 {
     const int x = 3;
@@ -76,21 +85,16 @@ void runStdFunctionBasics(void)
     std::cout << "doubler(" << x << ") = " << f(x) << std::endl;
 
     f = tripler;
-    
     std::cout << "tripler(" << x << ") = " << f(x) << std::endl;
 
     auto quadrupler = [](const int x) -> int { return (x * 4); };
-
     f = quadrupler;
-
     std::cout << "quadrupler(" << x << ") = " << f(x) << std::endl;
 
     f = Quintupler::multiply;
-
     std::cout << "quintupler(" << x << ") = " << f(x) << std::endl;
 
     f = std::bind(&Multiplier::multiply, &sextupler, std::placeholders::_1);
-
     std::cout << "sextupler(" << x << ") = " << f(x) << std::endl;
 }
 
