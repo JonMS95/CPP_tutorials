@@ -1,6 +1,7 @@
 /********* Include statements *********/
 
 #include <iostream>
+#include "BasicFunctors.hpp"
 
 /**************************************/
 
