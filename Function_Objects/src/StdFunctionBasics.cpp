@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <functional>
+#include <vector>
 #include "StdFunctionBasics.hpp"
 
 /**************************************/
@@ -19,6 +20,10 @@ Different from function pointers, the elements std::function can reference do no
 limit to free functions or static class member functions, but also to lambdas,
 functors with state (aka classes/structs with "()" operator overload) and member
 functions bound to an object.
+
+std::function objects can be returned, so returning a function (not a function
+pointer) becomes pretty easy this way. On top of that, this type of objects can also
+be holded within containers.
 */
 
 /******** Function definitions *********/
@@ -70,8 +75,18 @@ static std::function<int(const int)> dividingFunctionCreator(const int x)
     if(!x)
         throw std::invalid_argument("Divider cannot be zero");
 
-    auto fn = [x](const int y) -> int { return (x * y); };
+    auto fn = [x](const int y) -> int { return (y / x); };
     return std::function(fn);
+}
+
+static std::vector<std::function<int(const int)>> createDividerVector(const int start = 2, const int end = 10)
+{
+    std::vector<std::function<int(const int)>> ret;
+
+    for(int i = start; i <= end; i++)
+        ret.emplace_back(dividingFunctionCreator(i));
+
+    return ret;
 }
 
 void runStdFunctionBasics(void)
@@ -96,6 +111,16 @@ void runStdFunctionBasics(void)
 
     f = std::bind(&Multiplier::multiply, &sextupler, std::placeholders::_1);
     std::cout << "sextupler(" << x << ") = " << f(x) << std::endl;
+}
+
+void callDividersInVector(void)
+{
+    std::vector<std::function<int(const int)>> dividers = createDividerVector();
+
+    const int x = 100;
+
+    for(int div_idx = 0; div_idx < static_cast<int>(dividers.size()); div_idx++)
+        std::cout << "dividers[" << div_idx << "](" << x << ") = " << dividers[div_idx](x) << std::endl;
 }
 
 }
