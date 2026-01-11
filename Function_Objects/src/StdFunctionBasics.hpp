@@ -6,7 +6,7 @@
 namespace std_function_basics
 {
 
-
+void runStdFunctionBasics(void);
 
 }
 
