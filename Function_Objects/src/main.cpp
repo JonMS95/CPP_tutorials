@@ -2,13 +2,15 @@
 
 #include <iostream>
 #include "BasicFunctors.hpp"
+#include "StdFunctionBasics.hpp"
 
 /**************************************/
 
 /********** Define statements *********/
 
-#define MSG_TEST_HEADER         "*********************************"
-#define MSG_TEST_BASIC_FUNCTORS "Testing basic functors."
+#define MSG_TEST_HEADER                 "*********************************"
+#define MSG_TEST_BASIC_FUNCTORS         "Testing basic functors."
+#define MSG_TEST_STD_FUNCTION_BASICS    "Testing STD function basics."
 
 /**************************************/
 
@@ -16,6 +18,7 @@
 
 static void PrintTestHeader(const char* header);
 static void TestBasicFunctors(void);
+static void TestStdFunctionsBasics(void);
 
 /**************************************/
 
@@ -37,9 +40,16 @@ static void TestBasicFunctors(void)
     basic_functors::FunctorWithState();
 }
 
+static void TestStdFunctionsBasics(void)
+{
+    PrintTestHeader(MSG_TEST_STD_FUNCTION_BASICS);
+    std_function_basics::runStdFunctionBasics();
+}
+
 int main()
 {
     TestBasicFunctors();
+    TestStdFunctionsBasics();
 
     return 0;
 }
