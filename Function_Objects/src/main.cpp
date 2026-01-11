@@ -44,6 +44,7 @@ static void TestStdFunctionsBasics(void)
 {
     PrintTestHeader(MSG_TEST_STD_FUNCTION_BASICS);
     std_function_basics::runStdFunctionBasics();
+    std_function_basics::callDividersInVector();
 }
 
 int main()
